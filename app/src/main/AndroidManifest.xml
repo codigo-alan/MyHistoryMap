@@ -29,7 +29,7 @@
         </activity>
 
         <activity
-            android:name=".view.MainActivity"
+            android:name=".view.UserRegisterActivity"
             android:exported="true">
         </activity>
     </application>
