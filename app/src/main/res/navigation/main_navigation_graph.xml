@@ -15,4 +15,19 @@
         android:name="com.example.grafitismap.view.fragments.MarkersListFragment"
         android:label="fragment_markers_list"
         tools:layout="@layout/fragment_markers_list" />
+    <fragment
+        android:id="@+id/addMarkerFragment"
+        android:name="com.example.grafitismap.view.fragments.AddMarkerFragment"
+        android:label="fragment_add_marker"
+        tools:layout="@layout/fragment_add_marker" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.grafitismap.view.fragments.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/detailMarkerFragment"
+        android:name="com.example.grafitismap.view.fragments.DetailMarkerFragment"
+        android:label="fragment_detail_marker"
+        tools:layout="@layout/fragment_detail_marker" />
 </navigation>

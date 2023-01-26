@@ -2,5 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:title="@string/drawer_item_map" android:id="@+id/mapFragment"/>
     <item android:title="@string/drawer_menu_item_markers" android:id="@+id/markersListFragment"/>
+    <item android:title="Agregar Marcador" android:id="@+id/addMarkerFragment"/>
+    <item android:title="Ver mi perfil" android:id="@+id/profileFragment"/>
 
 </menu>
