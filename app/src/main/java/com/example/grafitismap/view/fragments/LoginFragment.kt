@@ -36,6 +36,7 @@ class LoginFragment : Fragment() {
         binding.loginBtnId.setOnClickListener {
             val intent = Intent(activity, MainActivity::class.java)
             startActivity(intent)
+            activity?.finish() //TODO consultar esto
         }
     }
 

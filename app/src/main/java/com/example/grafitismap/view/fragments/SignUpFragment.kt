@@ -32,6 +32,7 @@ class SignUpFragment : Fragment() {
         binding.signUpBtnId.setOnClickListener {
             val intent = Intent(activity, MainActivity::class.java)
             startActivity(intent)
+            activity?.finish() //TODO consultar esto
         }
     }
 }
