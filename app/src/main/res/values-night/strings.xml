@@ -8,4 +8,6 @@
     <string name="sign_up">Regístrate</string>
     <string name="signup_title">Crea tu cuenta</string>
     <string name="signup_btn">Crear cuenta</string>
+    <string name="drawer_item_map">Ver mapa</string>
+    <string name="drawer_menu_item_markers">Marcadores</string>
 </resources>
