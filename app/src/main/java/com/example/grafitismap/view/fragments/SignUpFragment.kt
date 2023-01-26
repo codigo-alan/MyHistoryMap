@@ -1,12 +1,15 @@
 package com.example.grafitismap.view.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.grafitismap.R
 import com.example.grafitismap.databinding.FragmentSignUpBinding
+import com.example.grafitismap.view.MainActivity
 
 class SignUpFragment : Fragment() {
 
@@ -23,6 +26,12 @@ class SignUpFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //TODO here the code
+        binding.toLoginBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_signUpFragment_to_loginFragment)
+        }
+        binding.signUpBtnId.setOnClickListener {
+            val intent = Intent(activity, MainActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

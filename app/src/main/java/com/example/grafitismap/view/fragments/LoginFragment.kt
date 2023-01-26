@@ -1,5 +1,6 @@
 package com.example.grafitismap.view.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 
 import com.example.grafitismap.R
 import com.example.grafitismap.databinding.FragmentLoginBinding
+import com.example.grafitismap.view.MainActivity
 
 
 class LoginFragment : Fragment() {
@@ -28,12 +30,14 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         //TODO here the code
         binding.toRegisterBtn.setOnClickListener {
-            navigateToSignUp()
+            findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
+        }
+
+        binding.loginBtnId.setOnClickListener {
+            val intent = Intent(activity, MainActivity::class.java)
+            startActivity(intent)
         }
     }
 
-    private fun navigateToSignUp() {
-        findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
-    }
 
 }
