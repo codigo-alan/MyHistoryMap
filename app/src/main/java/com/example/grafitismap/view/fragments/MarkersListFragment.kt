@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.grafitismap.R
+import com.example.grafitismap.adapters.OnClickListener
 import com.example.grafitismap.databinding.FragmentMarkersListBinding
+import com.example.grafitismap.models.Marker
 
 
-class MarkersListFragment : Fragment() {
+class MarkersListFragment : Fragment(), OnClickListener {
 
 
     private lateinit var binding: FragmentMarkersListBinding
@@ -25,6 +27,10 @@ class MarkersListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onClick(marker: Marker) {
+        //TODO("Not yet implemented")
     }
 
 }
