@@ -1,8 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">GrafitisMap</string>
-
-    <string name="login_button">Login</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login">Login</string>
     <string name="welcome_msg">Bienvenido a GrafitisMap</string>
     <string name="login_title">Logueate con tu cuenta</string>
     <string name="email_hint">Email</string>
