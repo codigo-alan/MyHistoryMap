@@ -14,7 +14,11 @@
         android:id="@+id/markersListFragment"
         android:name="com.example.grafitismap.view.fragments.MarkersListFragment"
         android:label="fragment_markers_list"
-        tools:layout="@layout/fragment_markers_list" />
+        tools:layout="@layout/fragment_markers_list" >
+        <action
+            android:id="@+id/action_markersListFragment_to_detailMarkerFragment"
+            app:destination="@id/detailMarkerFragment" />
+    </fragment>
     <fragment
         android:id="@+id/addMarkerFragment"
         android:name="com.example.grafitismap.view.fragments.AddMarkerFragment"

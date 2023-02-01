@@ -35,7 +35,7 @@ class MarkerAdapter(private var markers: List<Marker>, private var listener: OnC
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        //TODO("Not yet completed")
+
         val marker = markers[position]
 
         with(holder){
