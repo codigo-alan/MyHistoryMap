@@ -63,4 +63,8 @@ dependencies {
     //Navigation components
     implementation "androidx.navigation:navigation-fragment-ktx:2.5.3"
     implementation "androidx.navigation:navigation-ui-ktx:2.5.3"
+    //MongoDB
+    implementation("org.mongodb:mongodb-driver-sync:4.7.1")
+    //Realm
+    implementation("io.realm.kotlin:library-sync:1.5.0")
 }
