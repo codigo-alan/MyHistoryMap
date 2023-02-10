@@ -48,9 +48,9 @@ dependencies {
     //Splash Screen
     implementation 'androidx.core:core-splashscreen:1.0.0'
     //ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0-alpha05")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0-beta01")
     //LiveData
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.0-alpha05")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.0-beta01")
     //by viewModels extension for Fragments
     implementation("androidx.fragment:fragment-ktx:1.5.5")
     //by viewModels extension for Activity
@@ -65,5 +65,12 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:2.5.3"
     //Google Maps
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
+    //CameraX
+    implementation "androidx.camera:camera-core:1.2.0"
+    implementation "androidx.camera:camera-camera2:1.2.0"
+    implementation "androidx.camera:camera-lifecycle:1.2.0"
+    implementation "androidx.camera:camera-view:1.2.0"
+    implementation "androidx.camera:camera-extensions:1.2.0"
+
 
 }

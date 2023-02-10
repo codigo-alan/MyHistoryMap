@@ -23,7 +23,11 @@
         android:id="@+id/addMarkerFragment"
         android:name="com.example.grafitismap.view.fragments.AddMarkerFragment"
         android:label="fragment_add_marker"
-        tools:layout="@layout/fragment_add_marker" />
+        tools:layout="@layout/fragment_add_marker" >
+        <action
+            android:id="@+id/action_addMarkerFragment_to_cameraFragment"
+            app:destination="@id/cameraFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.grafitismap.view.fragments.ProfileFragment"
@@ -34,4 +38,9 @@
         android:name="com.example.grafitismap.view.fragments.DetailMarkerFragment"
         android:label="fragment_detail_marker"
         tools:layout="@layout/fragment_detail_marker" />
+    <fragment
+        android:id="@+id/cameraFragment"
+        android:name="com.example.grafitismap.view.fragments.CameraFragment"
+        android:label="fragment_camera"
+        tools:layout="@layout/fragment_camera" />
 </navigation>
