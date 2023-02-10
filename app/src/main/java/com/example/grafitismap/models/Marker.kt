@@ -4,5 +4,5 @@ data class Marker (
     var name: String,
     var photo: String,
     var latitude: Long,
-    var longitude: Long
+    var longitude: Long,
     )
