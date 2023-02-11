@@ -38,9 +38,9 @@ class MarkersListFragment : Fragment(), OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        markerAdapter = MarkerAdapter(viewModel.data.value!!, this)
+        markerAdapter = MarkerAdapter(viewModel.markersLiveData.value!!, this)
 
-        viewModel.data.observe(viewLifecycleOwner){
+        viewModel.markersLiveData.observe(viewLifecycleOwner){
             markerAdapter.setMarkers(it)
         }
 
