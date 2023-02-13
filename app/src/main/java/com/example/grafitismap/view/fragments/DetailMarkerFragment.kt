@@ -5,12 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import com.example.grafitismap.R
 import com.example.grafitismap.databinding.FragmentDetailMarkerBinding
+import com.example.grafitismap.viewmodel.GrafitisViewModel
 
 class DetailMarkerFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailMarkerBinding
+    private val viewModel: GrafitisViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,6 +26,12 @@ class DetailMarkerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val marker = viewModel.selectedMarker.value
+        binding.nameTv.text = marker?.name
+        binding.categoryTv.text = marker?.category
+        binding.latitudeTv.text = marker?.latitude.toString()
+        binding.longitudeTv.text = marker?.longitude.toString()
     }
 
 }
