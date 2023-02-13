@@ -8,7 +8,7 @@ open class Marker (
     @PrimaryKey
     var _id: ObjectId = ObjectId.create() ,
     var name: String = "" ,
-    var category: Category? = null ,
+    var category: Category? = null , //mongo relationship between Realm objects
     var photo: String = "" ,
     var latitude: Long = 0 ,
     var longitude: Long = 0 ,
