@@ -1,19 +1,18 @@
 package com.example.grafitismap.models
 
-open class Category {
-}
+import io.realm.kotlin.types.ObjectId
+import io.realm.kotlin.types.RealmObject
+import io.realm.kotlin.types.annotations.PrimaryKey
 
-/**
- * open class SportRealm(
-@PrimaryKey
-var _id: ObjectId = ObjectId.create(),
-var sport: String = "",
-var hours: Int = 0,
-var owner_id: String = ""
-) : RealmObject {
-// Declaring empty contructor
-constructor() : this(owner_id = "") {}
-//var doAfter: RealmList<Item>? = realmListOf()
-override fun toString() = "SportRealm($_id, $sport, $hours)"
+open class Category(
+    @PrimaryKey
+    var _id: ObjectId = ObjectId.create(),
+    var name: String = "",
+    var owner_id: String = ""
+    ) : RealmObject  {
+    constructor() : this(owner_id = "") {}
+
+    override fun toString(): String {
+        return "Category($_id, $name)"
+    }
 }
- */

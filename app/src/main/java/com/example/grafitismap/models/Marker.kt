@@ -6,15 +6,14 @@ import io.realm.kotlin.types.annotations.PrimaryKey
 
 open class Marker (
     @PrimaryKey
-    var _id: ObjectId = ObjectId.create(),
-    var name: String = "",
-    var photo: String = "",
-    var latitude: Long = 0,
-    var longitude: Long = 0,
+    var _id: ObjectId = ObjectId.create() ,
+    var name: String = "" ,
+    var category: Category? = null ,
+    var photo: String = "" ,
+    var latitude: Long = 0 ,
+    var longitude: Long = 0 ,
     var owner_id: String = ""
-    //var category: Catego : RealmObject {
-    // constructor()ry
     ) : RealmObject {
-        constructor() : this(owner_id = "") {}
+    constructor() : this(owner_id = "") {}
     override fun toString() = "Marker($_id, $name, $photo, $latitude, $longitude, $owner_id)"
-    }
+}
