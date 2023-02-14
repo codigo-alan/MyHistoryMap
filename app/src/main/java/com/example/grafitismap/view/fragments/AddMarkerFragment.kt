@@ -5,14 +5,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.grafitismap.R
 import com.example.grafitismap.databinding.FragmentAddMarkerBinding
+import com.example.grafitismap.models.MarkerModel
+import com.example.grafitismap.viewmodel.GrafitisViewModel
 
 
 class AddMarkerFragment : Fragment() {
 
     private lateinit var binding: FragmentAddMarkerBinding
+    private val viewModel : GrafitisViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,6 +33,17 @@ class AddMarkerFragment : Fragment() {
 
         binding.takePhtoBtn.setOnClickListener {
             findNavController().navigate(R.id.action_addMarkerFragment_to_cameraFragment)
+        }
+
+        binding.addMarkerBtn.setOnClickListener {
+            val name = binding.nameEt.text.toString()
+            val category = binding.categoryEt.text.toString()
+            val photo = "" //proviso assignment
+            val latitude = binding.latitudeEt.text.toString().toDouble()
+            val longitude = binding.longitudeEt.text.toString().toDouble()
+            val newMarkerModel = MarkerModel(name,category,photo,latitude, longitude)
+            viewModel.addMarker(newMarkerModel)
+            Toast.makeText(context,"Agregado nuevo Marker",Toast.LENGTH_SHORT).show()
         }
     }
 
