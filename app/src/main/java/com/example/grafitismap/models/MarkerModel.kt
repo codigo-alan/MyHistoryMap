@@ -1,9 +1,9 @@
 package com.example.grafitismap.models
 
-data class Marker (
+data class MarkerModel (
     var name: String,
     var category: String,
     var photo: String,
-    var latitude: Long,
-    var longitude: Long,
+    var latitude: Double,
+    var longitude: Double,
     )

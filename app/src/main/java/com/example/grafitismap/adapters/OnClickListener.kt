@@ -1,7 +1,7 @@
 package com.example.grafitismap.adapters
 
-import com.example.grafitismap.models.Marker
+import com.example.grafitismap.models.MarkerModel
 
 interface OnClickListener {
-    fun onClick(marker: Marker)
+    fun onClick(markerModel: MarkerModel)
 }
