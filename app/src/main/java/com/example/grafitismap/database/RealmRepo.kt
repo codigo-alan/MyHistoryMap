@@ -6,50 +6,67 @@ import io.realm.kotlin.log.LogLevel
 import io.realm.kotlin.mongodb.App
 import io.realm.kotlin.mongodb.AppConfiguration
 import io.realm.kotlin.mongodb.Credentials
+import io.realm.kotlin.mongodb.User
 import io.realm.kotlin.mongodb.sync.SyncConfiguration
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class RealmRepo {
-    lateinit var realmApp : App
-    lateinit var creds : Credentials
+    var realmApp : App
+    lateinit var user : User
     lateinit var config : SyncConfiguration
-    val user = realmApp.currentUser!!
+    //lateinit var creds : Credentials
 
-    fun createRealmApp(){
-        realmApp = App.create(
+    init {
+        realmApp = createRealmApp()
+        //user = realmApp.currentUser!!
+        //config = remoteConfig()
+    }
+
+    private fun createRealmApp() = App.create(
             AppConfiguration.Builder("application-0-qderj") //app id from app services in atlas.
                 .log(LogLevel.ALL)
                 .build())
+
+    private fun remoteConfig() = SyncConfiguration.Builder(this.user, setOf(Marker::class))
+        .initialSubscriptions { realm ->
+            add(
+                realm.query<Marker>(),
+                "All Markers"
+            )
+            add(
+                realm.query<Marker>("owner_id == $0", realmApp.currentUser!!.id),
+                "User's Markers"
+            )
+        }
+        .waitForInitialRemoteData()
+        .build()
+
+
+    fun getCredentials(email: String, password: String) =
+        Credentials.emailPassword(email, password)
+
+    fun login(credentials: Credentials){ //TODO verify
+        CoroutineScope(Dispatchers.IO).launch {
+            realmApp.login(credentials)
+            user = realmApp.currentUser!!
+            config = remoteConfig()
+        }
     }
 
-    fun getCredentials(email: String, password: String){
-        creds = Credentials.emailPassword(email, password)
-    }
+    fun register(email: String, password: String){ //TODO verify
+        CoroutineScope(Dispatchers.IO).launch {
+            realmApp.emailPasswordAuth.registerUser(email, password)
+            withContext(Dispatchers.Main) {
 
-    //realmApp.login(creds)//need login to register successfully. THis line is principally to log in the user.
-    //realmApp.emailPasswordAuth.registerUser(userName, userPassword) //register user.
-
-    suspend fun login(){
-        this.realmApp.login(this.creds)
-    }
-
-    suspend fun register(email: String, password: String){
-        this.realmApp.emailPasswordAuth.registerUser(email, password)
-    }
-
-    fun remoteConfig(){ //TODO change data
-        config = SyncConfiguration.Builder(user, setOf(Marker::class))
-            .initialSubscriptions { realm ->
-                add(
-                    realm.query<Marker>(),
-                    "All Markers"
-                )
-                add(
-                    realm.query<Marker>("owner_id == $0", realmApp.currentUser!!.id),
-                    "User's Markers"
-                )
             }
-            .waitForInitialRemoteData()
-            .build()
+        }
+
     }
+
+
+
 
 }

@@ -10,11 +10,17 @@ class GrafitisViewModel: ViewModel() {
     var selectedMarker = MutableLiveData<Marker>()
     val realmRepo = MutableLiveData<RealmRepo>()
 
-    init {
-        realmRepo.value?.createRealmApp()
-    }
 
     fun selectMarker(newMarker: Marker){
         selectedMarker.postValue(newMarker)
+    }
+
+    fun registerUser(email: String, password: String){
+        this.realmRepo.value?.register(email, password)
+    }
+
+    fun loginUser(email: String, password: String){
+        val creds = this.realmRepo.value?.getCredentials(email, password)
+        this.realmRepo.value?.login(creds!!) //TODO be carefull with null
     }
 }
