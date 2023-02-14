@@ -3,9 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_margin="4dp"
     android:layout_width="match_parent"
     android:layout_height="56dp"
+    android:layout_margin="2dp"
     android:clickable="true"
     android:focusable="true">
 
@@ -26,6 +26,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         tools:text="Marker name"
+        android:textStyle="bold"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/itemIv"
         app:layout_constraintTop_toTopOf="parent" />
@@ -34,7 +36,7 @@
         android:id="@+id/itemCategoryTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="Acontecimiento"
+        tools:text="Category"
         android:textSize="16sp"
         android:textStyle="bold"
         android:textColor="@color/primaryLightColor"

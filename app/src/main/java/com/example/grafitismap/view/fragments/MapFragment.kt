@@ -43,17 +43,13 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
         enableLocation()
-        map.setOnMapLongClickListener { coordinates ->
-            Toast.makeText(context,"long",Toast.LENGTH_SHORT).show()
-            createMarker(coordinates) //To create the especified marker
+        map.setOnMapLongClickListener {coordinates ->
+            createMarker(coordinates)
         }
     }
 
@@ -62,26 +58,23 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mapFragment?.getMapAsync(this)
     }
     fun createMarker(coordinates: LatLng){
-        //val coordinates = LatLng(41.4534227,2.1841046)
-        //val myMarker = MarkerOptions().position(coordinates).title("ITB")
-        val mapMarker = MarkerOptions().position(coordinates)
-        map.addMarker(mapMarker)
+        val myMarker = MarkerOptions().position(coordinates)
+        map.addMarker(myMarker)
         map.animateCamera(
             CameraUpdateFactory.newLatLngZoom(coordinates, 18f),
             5000, null)
-        val newMarkerModel = castToMarkerModel(mapMarker)
-        viewModel.addMarker(newMarkerModel)
+        val markerModel = castToMarkerModel(myMarker)
+        viewModel.addMarker(markerModel)
     }
 
-    private fun castToMarkerModel(mapMarker: MarkerOptions) : MarkerModel{
+    private fun castToMarkerModel(mapMarker : MarkerOptions): MarkerModel {
         val name = mapMarker.title ?: ""
-        val category = "Acontecimiento" //provisory assignment
+        val category = "Acontecimiento"
         val photo = ""
         val latitude = mapMarker.position.latitude
         val longitude = mapMarker.position.longitude
-        return MarkerModel(name,category,photo,latitude, longitude)
+        return MarkerModel(name, category, photo, latitude, longitude)
     }
-
 
     private fun isLocationPermissionGranted(): Boolean {
         return ContextCompat.checkSelfPermission(requireContext(),
