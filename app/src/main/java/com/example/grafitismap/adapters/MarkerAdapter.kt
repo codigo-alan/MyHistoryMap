@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.grafitismap.R
 import com.example.grafitismap.databinding.ItemMarkerBinding
-import com.example.grafitismap.models.Marker
+import com.example.grafitismap.models.MarkerModel
 
-class MarkerAdapter(private var markers: List<Marker>, private var listener: OnClickListener)
+class MarkerAdapter(private var markerModels: List<MarkerModel>, private var listener: OnClickListener)
     : RecyclerView.Adapter<MarkerAdapter.ViewHolder>() {
 
     private lateinit var context: Context
@@ -17,9 +17,9 @@ class MarkerAdapter(private var markers: List<Marker>, private var listener: OnC
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view){
         val binding = ItemMarkerBinding.bind(view)
 
-        fun setListener(marker: Marker){
+        fun setListener(markerModel: MarkerModel){
             binding.root.setOnClickListener {
-                listener.onClick(marker)
+                listener.onClick(markerModel)
             }
         }
     }
@@ -31,21 +31,22 @@ class MarkerAdapter(private var markers: List<Marker>, private var listener: OnC
     }
 
     override fun getItemCount(): Int {
-        return  markers.size
+        return  markerModels.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        val marker = markers[position]
+        val marker = markerModels[position]
 
         with(holder){
             setListener(marker)
             binding.itemNameTv.text = marker.name
+            binding.itemCategoryTv.text = marker.category
         }
     }
 
-    fun setMarkers(newListMarkers: List<Marker>){
-        markers = newListMarkers
+    fun setMarkers(newListMarkerModels: List<MarkerModel>){
+        markerModels = newListMarkerModels
         notifyDataSetChanged()
     }
 

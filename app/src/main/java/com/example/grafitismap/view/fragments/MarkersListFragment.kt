@@ -8,13 +8,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 
 import androidx.recyclerview.widget.RecyclerView
 import com.example.grafitismap.R
 import com.example.grafitismap.adapters.MarkerAdapter
 import com.example.grafitismap.adapters.OnClickListener
 import com.example.grafitismap.databinding.FragmentMarkersListBinding
-import com.example.grafitismap.models.Marker
+import com.example.grafitismap.models.MarkerModel
 import com.example.grafitismap.viewmodel.GrafitisViewModel
 
 
@@ -44,7 +45,7 @@ class MarkersListFragment : Fragment(), OnClickListener {
             markerAdapter.setMarkers(it)
         }
 
-        myLayoutManager = GridLayoutManager(context, 3)
+        myLayoutManager = LinearLayoutManager(context)
 
         binding.recyclerListMarkers.apply {
             setHasFixedSize(true)
@@ -54,8 +55,8 @@ class MarkersListFragment : Fragment(), OnClickListener {
 
     }
 
-    override fun onClick(marker: Marker) {
-        viewModel.selectMarker(marker)
+    override fun onClick(markerModel: MarkerModel) {
+        viewModel.selectMarker(markerModel)
         findNavController().navigate(R.id.action_markersListFragment_to_detailMarkerFragment)
     }
 

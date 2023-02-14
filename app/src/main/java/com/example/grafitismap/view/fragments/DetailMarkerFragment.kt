@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import com.example.grafitismap.R
 import com.example.grafitismap.databinding.FragmentDetailMarkerBinding
 import com.example.grafitismap.viewmodel.GrafitisViewModel
 
@@ -27,7 +26,7 @@ class DetailMarkerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val marker = viewModel.selectedMarker.value
+        val marker = viewModel.selectedMarkerModel.value
         binding.nameTv.text = marker?.name
         binding.categoryTv.text = marker?.category
         binding.latitudeTv.text = marker?.latitude.toString()
