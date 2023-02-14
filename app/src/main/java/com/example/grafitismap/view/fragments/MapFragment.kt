@@ -3,6 +3,7 @@ package com.example.grafitismap.view.fragments
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +11,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.grafitismap.R
 import com.example.grafitismap.databinding.FragmentMapBinding
 import com.example.grafitismap.models.MarkerModel
@@ -48,15 +51,29 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
         enableLocation()
+        viewModel.markersLiveData.observe(viewLifecycleOwner){
+            it.forEach { item -> getMarker(LatLng(item.latitude,item.longitude)) }
+        }
+        /*viewModel.markersLiveData.value?.forEach { markerModel ->
+            getMarker(LatLng(markerModel.latitude, markerModel.longitude))
+        }*/
         map.setOnMapLongClickListener {coordinates ->
-            createMarker(coordinates)
+            Log.d("coordinates","$coordinates")
+            createMarker(coordinates) //to create marker here in map
+            //to navigate with data to addFragment
+            /*findNavController().navigate(R.id.action_mapFragment_to_addMarkerFragment,
+            bundleOf("latitude" to coordinates.latitude, "longitude" to coordinates.longitude)
+            )*/
         }
     }
+
+
 
     fun createMap(){
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
     }
+    //to create marker here in map
     fun createMarker(coordinates: LatLng){
         val myMarker = MarkerOptions().position(coordinates)
         map.addMarker(myMarker)
@@ -65,6 +82,10 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             5000, null)
         val markerModel = castToMarkerModel(myMarker)
         viewModel.addMarker(markerModel)
+    }
+    fun getMarker(coordinates: LatLng){
+        val myMarker = MarkerOptions().position(coordinates)
+        map.addMarker(myMarker)
     }
 
     private fun castToMarkerModel(mapMarker : MarkerOptions): MarkerModel {

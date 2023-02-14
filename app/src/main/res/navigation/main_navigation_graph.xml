@@ -9,7 +9,17 @@
         android:id="@+id/mapFragment"
         android:name="com.example.grafitismap.view.fragments.MapFragment"
         android:label="fragment_map"
-        tools:layout="@layout/fragment_map" />
+        tools:layout="@layout/fragment_map" >
+        <action
+            android:id="@+id/action_mapFragment_to_addMarkerFragment"
+            app:destination="@id/addMarkerFragment" />
+        <argument
+            android:name="latitude"
+            app:argType="Double"/>
+        <argument
+            android:name="longitude"
+            app:argType="Double"/>
+    </fragment>
     <fragment
         android:id="@+id/markersListFragment"
         android:name="com.example.grafitismap.view.fragments.MarkersListFragment"

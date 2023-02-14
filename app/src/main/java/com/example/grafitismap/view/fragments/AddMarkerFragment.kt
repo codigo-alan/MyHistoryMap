@@ -12,6 +12,8 @@ import com.example.grafitismap.R
 import com.example.grafitismap.databinding.FragmentAddMarkerBinding
 import com.example.grafitismap.models.MarkerModel
 import com.example.grafitismap.viewmodel.GrafitisViewModel
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 
 
 class AddMarkerFragment : Fragment() {
@@ -31,6 +33,11 @@ class AddMarkerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //arguments from start fragment
+        val latitude = arguments?.getDouble("latitude")
+        val longitude = arguments?.getDouble("longitude")
+
+
         binding.takePhtoBtn.setOnClickListener {
             findNavController().navigate(R.id.action_addMarkerFragment_to_cameraFragment)
         }
@@ -39,9 +46,9 @@ class AddMarkerFragment : Fragment() {
             val name = binding.nameEt.text.toString()
             val category = binding.categoryEt.text.toString()
             val photo = "" //proviso assignment
-            val latitude = binding.latitudeEt.text.toString().toDouble()
-            val longitude = binding.longitudeEt.text.toString().toDouble()
-            val newMarkerModel = MarkerModel(name,category,photo,latitude, longitude)
+            val newLatitude = binding.latitudeEt.text.toString().toDouble()
+            val newLongitude = binding.longitudeEt.text.toString().toDouble()
+            val newMarkerModel = MarkerModel(name,category,photo,newLatitude, newLongitude)
             viewModel.addMarker(newMarkerModel)
             Toast.makeText(context,"Agregado nuevo Marker",Toast.LENGTH_SHORT).show()
         }
