@@ -37,6 +37,13 @@ class AddMarkerFragment : Fragment() {
         val latitude = arguments?.getDouble("latitude")
         val longitude = arguments?.getDouble("longitude")
 
+        if (latitude != null && longitude != null) {
+            binding.latitudeEt.setText(latitude.toString())
+            binding.longitudeEt.setText(longitude.toString())
+        }
+
+        //binding.addMarkerBtn.isEnabled = binding.nameEt.text.isNotEmpty()
+
 
         binding.takePhtoBtn.setOnClickListener {
             findNavController().navigate(R.id.action_addMarkerFragment_to_cameraFragment)

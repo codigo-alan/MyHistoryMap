@@ -54,16 +54,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         viewModel.markersLiveData.observe(viewLifecycleOwner){
             it.forEach { item -> getMarker(LatLng(item.latitude,item.longitude)) }
         }
-        /*viewModel.markersLiveData.value?.forEach { markerModel ->
-            getMarker(LatLng(markerModel.latitude, markerModel.longitude))
-        }*/
+
         map.setOnMapLongClickListener {coordinates ->
             Log.d("coordinates","$coordinates")
-            createMarker(coordinates) //to create marker here in map
+            //createMarker(coordinates) //to create marker here in map
             //to navigate with data to addFragment
-            /*findNavController().navigate(R.id.action_mapFragment_to_addMarkerFragment,
+            findNavController().navigate(R.id.action_mapFragment_to_addMarkerFragment,
             bundleOf("latitude" to coordinates.latitude, "longitude" to coordinates.longitude)
-            )*/
+            )
         }
     }
 

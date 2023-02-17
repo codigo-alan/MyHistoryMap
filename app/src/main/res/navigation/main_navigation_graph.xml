@@ -15,10 +15,10 @@
             app:destination="@id/addMarkerFragment" />
         <argument
             android:name="latitude"
-            app:argType="Double"/>
+            app:argType="float"/>
         <argument
             android:name="longitude"
-            app:argType="Double"/>
+            app:argType="float"/>
     </fragment>
     <fragment
         android:id="@+id/markersListFragment"
