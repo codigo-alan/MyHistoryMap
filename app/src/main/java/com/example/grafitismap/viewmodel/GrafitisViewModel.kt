@@ -10,6 +10,7 @@ class GrafitisViewModel: ViewModel() {
     var selectedMarkerModel = MutableLiveData<MarkerModel>()
 
 
+
     fun selectMarker(newMarkerModel: MarkerModel){
         selectedMarkerModel.postValue(newMarkerModel)
     }
