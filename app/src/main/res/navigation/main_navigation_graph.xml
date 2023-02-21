@@ -46,6 +46,7 @@
         <argument
             android:name="longitude_to_add"
             app:argType="float" />
+
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -61,5 +62,9 @@
         android:id="@+id/cameraFragment"
         android:name="com.example.grafitismap.view.fragments.CameraFragment"
         android:label="fragment_camera"
-        tools:layout="@layout/fragment_camera" />
+        tools:layout="@layout/fragment_camera" >
+        <action
+            android:id="@+id/action_cameraFragment_to_addMarkerFragment"
+            app:destination="@id/addMarkerFragment" />
+    </fragment>
 </navigation>

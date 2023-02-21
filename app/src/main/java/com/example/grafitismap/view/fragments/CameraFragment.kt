@@ -16,8 +16,11 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.grafitismap.R
 import com.example.grafitismap.databinding.FragmentCameraBinding
+import com.example.grafitismap.viewmodel.GrafitisViewModel
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -28,6 +31,7 @@ import java.util.concurrent.Executors
 class CameraFragment : Fragment() {
 
     lateinit var binding: FragmentCameraBinding
+    private val viewModel : GrafitisViewModel by activityViewModels()
     private var imageCapture: ImageCapture? = null
     private lateinit var outputDirectory: File
     private lateinit var cameraExecutor: ExecutorService
@@ -92,6 +96,8 @@ class CameraFragment : Fragment() {
                     val msg = "Photo capture succeeded: $savedUri"
                     Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
                     Log.d(CameraFragment.TAG, msg)
+                    viewModel.newMarkerTemp.photo = savedUri.toString()
+                    findNavController().navigate(R.id.action_cameraFragment_to_addMarkerFragment)
                 }
             })
     }

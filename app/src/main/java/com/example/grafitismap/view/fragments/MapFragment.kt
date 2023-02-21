@@ -1,6 +1,7 @@
 package com.example.grafitismap.view.fragments
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -11,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -71,10 +73,18 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         val latitude = arguments?.getFloat("latitude_to_map")?.toDouble() ?: 0.0
         val longitude = arguments?.getFloat("longitude_to_map")?.toDouble() ?: 0.0
 
+
         map.animateCamera(
             CameraUpdateFactory.newLatLngZoom(LatLng(latitude,longitude), 18f),
             5000, null)
     }
+
+    //TODO view how to get self location
+    /*private fun getLocation() {
+        val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), locationPermissionCode)
+        }*/
 
     private fun createMap(){
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?

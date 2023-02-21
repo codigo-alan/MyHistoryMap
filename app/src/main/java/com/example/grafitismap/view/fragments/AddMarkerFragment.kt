@@ -39,6 +39,8 @@ class AddMarkerFragment : Fragment() {
         val latitude = arguments?.getFloat("latitude_to_add")?.toDouble()
         val longitude = arguments?.getFloat("longitude_to_add")?.toDouble()
 
+
+
         if (latitude != null && longitude != null) {
             binding.latitudeEt.setText(latitude.toString())
             binding.longitudeEt.setText(longitude.toString())
@@ -49,17 +51,19 @@ class AddMarkerFragment : Fragment() {
         }
 
         binding.addMarkerBtn.setOnClickListener {
+            //argument from camera
+            val imageUriString = arguments?.getString("imageUri") ?: ""
 
             if (getFormState(binding)) {
                 val name = binding.nameEt.text.toString()
                 val category = binding.categoryEt.text.toString()
-                val photo = "" //proviso assignment
+                val photo = imageUriString
                 val newLatitude = binding.latitudeEt.text.toString().toDouble()
                 val newLongitude = binding.longitudeEt.text.toString().toDouble()
-                val newMarkerModel = MarkerModel(name,category,photo,newLatitude, newLongitude)
-                viewModel.addMarker(newMarkerModel)
+                //val newMarkerModel = MarkerModel(name,category,photo,newLatitude, newLongitude)
+                viewModel.newMarkerTemp = MarkerModel(name,category,photo,newLatitude, newLongitude)
+                viewModel.addMarker(viewModel.newMarkerTemp)
                 Toast.makeText(context,"Agregado nuevo Marker",Toast.LENGTH_SHORT).show()
-                //findNavController().navigate(R.id.action_addMarkerFragment_to_mapFragment)
                 val action = AddMarkerFragmentDirections.
                 actionAddMarkerFragmentToMapFragment(
                     newLatitude.toFloat(), newLongitude.toFloat())
