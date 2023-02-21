@@ -9,7 +9,17 @@
         android:id="@+id/mapFragment"
         android:name="com.example.grafitismap.view.fragments.MapFragment"
         android:label="fragment_map"
-        tools:layout="@layout/fragment_map" />
+        tools:layout="@layout/fragment_map" >
+        <action
+            android:id="@+id/action_mapFragment_to_addMarkerFragment"
+            app:destination="@id/addMarkerFragment" />
+        <argument
+            android:name="latitude_to_map"
+            app:argType="float" />
+        <argument
+            android:name="longitude_to_map"
+            app:argType="float" />
+    </fragment>
     <fragment
         android:id="@+id/markersListFragment"
         android:name="com.example.grafitismap.view.fragments.MarkersListFragment"
@@ -27,6 +37,15 @@
         <action
             android:id="@+id/action_addMarkerFragment_to_cameraFragment"
             app:destination="@id/cameraFragment" />
+        <action
+            android:id="@+id/action_addMarkerFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+        <argument
+            android:name="latitude_to_add"
+            app:argType="float" />
+        <argument
+            android:name="longitude_to_add"
+            app:argType="float" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"

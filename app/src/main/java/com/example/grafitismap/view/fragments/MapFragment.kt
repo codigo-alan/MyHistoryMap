@@ -2,19 +2,23 @@ package com.example.grafitismap.view.fragments
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.grafitismap.R
 import com.example.grafitismap.databinding.FragmentMapBinding
-import com.example.grafitismap.models.MarkerModel
 import com.example.grafitismap.viewmodel.GrafitisViewModel
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -43,21 +47,50 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
+
         map = googleMap
         enableLocation()
+        moveToNewMarker() //TODO move camera to newMarker
+        viewModel.markersLiveData.observe(viewLifecycleOwner){
+            it.forEach { item -> getMarker(LatLng(item.latitude,item.longitude)) }
+        }
+
         map.setOnMapLongClickListener {coordinates ->
-            createMarker(coordinates)
+            Log.d("coordinates","$coordinates")
+            //createMarker(coordinates) //to create marker here in map
+            //to navigate with data to addFragment
+            /*findNavController().navigate(R.id.action_mapFragment_to_addMarkerFragment,
+            bundleOf("latitude" to coordinates.latitude, "longitude" to coordinates.longitude)
+            )*/
+            val action = MapFragmentDirections.
+            actionMapFragmentToAddMarkerFragment(
+                coordinates.latitude.toFloat(), coordinates.longitude.toFloat())
+            findNavController().navigate(action)
         }
     }
+
+    private fun moveToNewMarker() {
+        //arguments from addMarker fragment
+        val latitude = arguments?.getFloat("latitude_to_map")?.toDouble() ?: 0.0
+        val longitude = arguments?.getFloat("longitude_to_map")?.toDouble() ?: 0.0
+        Log.d("newMarker","$latitude")
+        map.animateCamera(
+            CameraUpdateFactory.newLatLngZoom(LatLng(latitude,longitude), 18f),
+            5000, null)
+
+    }
+
 
     fun createMap(){
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
     }
-    fun createMarker(coordinates: LatLng){
+    //to create marker here in map
+    /*fun createMarker(coordinates: LatLng){
         val myMarker = MarkerOptions().position(coordinates)
         map.addMarker(myMarker)
         map.animateCamera(
@@ -65,16 +98,20 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             5000, null)
         val markerModel = castToMarkerModel(myMarker)
         viewModel.addMarker(markerModel)
+    }*/
+    fun getMarker(coordinates: LatLng){
+        val myMarker = MarkerOptions().position(coordinates)
+        map.addMarker(myMarker)
     }
 
-    private fun castToMarkerModel(mapMarker : MarkerOptions): MarkerModel {
+    /*private fun castToMarkerModel(mapMarker : MarkerOptions): MarkerModel {
         val name = mapMarker.title ?: ""
         val category = "Acontecimiento"
         val photo = ""
         val latitude = mapMarker.position.latitude
         val longitude = mapMarker.position.longitude
         return MarkerModel(name, category, photo, latitude, longitude)
-    }
+    }*/
 
     private fun isLocationPermissionGranted(): Boolean {
         return ContextCompat.checkSelfPermission(requireContext(),
@@ -115,7 +152,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private fun requestLocationPermission(){
         if(ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(),
                 Manifest.permission.ACCESS_FINE_LOCATION)){
-            Toast.makeText(requireContext(), "Ves a la pantalla de permisos de l’aplicació i habilita el de Geolocalització", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Diríjete a la pantalla de permisos de la app y habilite permisos de geolocalización", Toast.LENGTH_SHORT).show()
         }
         else{
             ActivityCompat.requestPermissions(requireActivity(),
@@ -184,7 +221,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 return
             }
             map.isMyLocationEnabled = false
-            Toast.makeText(requireContext(), "Accepta els permisos de geolocalització",
+            Toast.makeText(requireContext(), "Acepta los permisos de geolocalización",
                 Toast.LENGTH_SHORT).show()
         }
     }

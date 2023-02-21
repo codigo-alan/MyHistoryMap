@@ -8,7 +8,8 @@ import com.google.android.gms.maps.GoogleMap
 class GrafitisViewModel: ViewModel() {
     var markersLiveData = MutableLiveData<List<MarkerModel>>().apply { value = listOf() }
     var selectedMarkerModel = MutableLiveData<MarkerModel>()
-    //var mapLiveData = MutableLiveData<GoogleMap>()
+
+
 
     fun selectMarker(newMarkerModel: MarkerModel){
         selectedMarkerModel.postValue(newMarkerModel)
@@ -16,7 +17,5 @@ class GrafitisViewModel: ViewModel() {
     fun addMarker(newMarkerModel: MarkerModel){
         markersLiveData.postValue(markersLiveData.value?.plus(newMarkerModel))
     }
-    /*fun updateMap(newMap: GoogleMap){
-        mapLiveData.postValue(newMap)
-    }*/
+
 }
