@@ -51,21 +51,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-
         map = googleMap
         enableLocation()
-        moveToNewMarker() //TODO move camera to newMarker
+        moveToNewMarker() //TODO move camera to newMarker or self location
         viewModel.markersLiveData.observe(viewLifecycleOwner){
             it.forEach { item -> getMarker(LatLng(item.latitude,item.longitude)) }
         }
 
         map.setOnMapLongClickListener {coordinates ->
-            Log.d("coordinates","$coordinates")
-            //createMarker(coordinates) //to create marker here in map
-            //to navigate with data to addFragment
-            /*findNavController().navigate(R.id.action_mapFragment_to_addMarkerFragment,
-            bundleOf("latitude" to coordinates.latitude, "longitude" to coordinates.longitude)
-            )*/
             val action = MapFragmentDirections.
             actionMapFragmentToAddMarkerFragment(
                 coordinates.latitude.toFloat(), coordinates.longitude.toFloat())
@@ -77,41 +70,22 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         //arguments from addMarker fragment
         val latitude = arguments?.getFloat("latitude_to_map")?.toDouble() ?: 0.0
         val longitude = arguments?.getFloat("longitude_to_map")?.toDouble() ?: 0.0
-        Log.d("newMarker","$latitude")
+
         map.animateCamera(
             CameraUpdateFactory.newLatLngZoom(LatLng(latitude,longitude), 18f),
             5000, null)
-
     }
 
-
-    fun createMap(){
+    private fun createMap(){
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
     }
-    //to create marker here in map
-    /*fun createMarker(coordinates: LatLng){
-        val myMarker = MarkerOptions().position(coordinates)
-        map.addMarker(myMarker)
-        map.animateCamera(
-            CameraUpdateFactory.newLatLngZoom(coordinates, 18f),
-            5000, null)
-        val markerModel = castToMarkerModel(myMarker)
-        viewModel.addMarker(markerModel)
-    }*/
-    fun getMarker(coordinates: LatLng){
+
+    private fun getMarker(coordinates: LatLng){
         val myMarker = MarkerOptions().position(coordinates)
         map.addMarker(myMarker)
     }
 
-    /*private fun castToMarkerModel(mapMarker : MarkerOptions): MarkerModel {
-        val name = mapMarker.title ?: ""
-        val category = "Acontecimiento"
-        val photo = ""
-        val latitude = mapMarker.position.latitude
-        val longitude = mapMarker.position.longitude
-        return MarkerModel(name, category, photo, latitude, longitude)
-    }*/
 
     private fun isLocationPermissionGranted(): Boolean {
         return ContextCompat.checkSelfPermission(requireContext(),
@@ -133,13 +107,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     )
                 } != PackageManager.PERMISSION_GRANTED
             ) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
                 return
             }
             map.isMyLocationEnabled = true
@@ -177,13 +144,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         )
                     } != PackageManager.PERMISSION_GRANTED
                 ) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
                     return
                 }
                 map.isMyLocationEnabled = true
@@ -211,13 +171,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     )
                 } != PackageManager.PERMISSION_GRANTED
             ) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
                 return
             }
             map.isMyLocationEnabled = false
