@@ -14,11 +14,11 @@
             android:id="@+id/action_mapFragment_to_addMarkerFragment"
             app:destination="@id/addMarkerFragment" />
         <argument
-            android:name="latitude"
-            app:argType="float"/>
+            android:name="latitude_to_map"
+            app:argType="float" />
         <argument
-            android:name="longitude"
-            app:argType="float"/>
+            android:name="longitude_to_map"
+            app:argType="float" />
     </fragment>
     <fragment
         android:id="@+id/markersListFragment"
@@ -37,6 +37,15 @@
         <action
             android:id="@+id/action_addMarkerFragment_to_cameraFragment"
             app:destination="@id/cameraFragment" />
+        <action
+            android:id="@+id/action_addMarkerFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+        <argument
+            android:name="latitude_to_add"
+            app:argType="float" />
+        <argument
+            android:name="longitude_to_add"
+            app:argType="float" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"

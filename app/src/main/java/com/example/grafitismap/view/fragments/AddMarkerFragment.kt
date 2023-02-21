@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
@@ -34,15 +35,13 @@ class AddMarkerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //arguments from start fragment
-        val latitude = arguments?.getDouble("latitude")
-        val longitude = arguments?.getDouble("longitude")
+        val latitude = arguments?.getFloat("latitude_to_add")?.toDouble()
+        val longitude = arguments?.getFloat("longitude_to_add")?.toDouble()
 
         if (latitude != null && longitude != null) {
             binding.latitudeEt.setText(latitude.toString())
             binding.longitudeEt.setText(longitude.toString())
         }
-
-        //binding.addMarkerBtn.isEnabled = binding.nameEt.text.isNotEmpty()
 
         binding.takePhtoBtn.setOnClickListener {
             findNavController().navigate(R.id.action_addMarkerFragment_to_cameraFragment)
@@ -59,6 +58,11 @@ class AddMarkerFragment : Fragment() {
                 val newMarkerModel = MarkerModel(name,category,photo,newLatitude, newLongitude)
                 viewModel.addMarker(newMarkerModel)
                 Toast.makeText(context,"Agregado nuevo Marker",Toast.LENGTH_SHORT).show()
+                //findNavController().navigate(R.id.action_addMarkerFragment_to_mapFragment)
+                val action = AddMarkerFragmentDirections.
+                actionAddMarkerFragmentToMapFragment(
+                    newLatitude.toFloat(), newLongitude.toFloat())
+                findNavController().navigate(action)
             } else {
                 Toast.makeText(context,"Debes completar todos los campos con *",Toast.LENGTH_SHORT).show()
             }
