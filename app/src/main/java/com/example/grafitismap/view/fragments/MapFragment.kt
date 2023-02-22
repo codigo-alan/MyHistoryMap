@@ -19,6 +19,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.grafitismap.R
 import com.example.grafitismap.databinding.FragmentMapBinding
+import com.example.grafitismap.models.MarkerModel
 import com.example.grafitismap.viewmodel.GrafitisViewModel
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -58,24 +59,21 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         moveToNewMarker() //TODO move camera to newMarker or self location
         viewModel.markersLiveData.observe(viewLifecycleOwner){
             it.forEach { item -> getMarker(LatLng(item.latitude,item.longitude)) }
+            viewModel.newMarkerTemp =
+                MarkerModel("","","", -1.0, -1.0)
         }
 
         map.setOnMapLongClickListener {coordinates ->
-            val action = MapFragmentDirections.
-            actionMapFragmentToAddMarkerFragment(
-                coordinates.latitude.toFloat(), coordinates.longitude.toFloat())
-            findNavController().navigate(action)
+            viewModel.newMarkerTemp =
+                MarkerModel("","","", coordinates.latitude, coordinates.longitude)
+            findNavController().navigate(R.id.action_mapFragment_to_addMarkerFragment)
         }
     }
 
     private fun moveToNewMarker() {
-        //arguments from addMarker fragment
-        val latitude = arguments?.getFloat("latitude_to_map")?.toDouble() ?: 0.0
-        val longitude = arguments?.getFloat("longitude_to_map")?.toDouble() ?: 0.0
-
 
         map.animateCamera(
-            CameraUpdateFactory.newLatLngZoom(LatLng(latitude,longitude), 18f),
+            CameraUpdateFactory.newLatLngZoom(LatLng(viewModel.newMarkerTemp.latitude,viewModel.newMarkerTemp.longitude), 18f),
             5000, null)
     }
 
