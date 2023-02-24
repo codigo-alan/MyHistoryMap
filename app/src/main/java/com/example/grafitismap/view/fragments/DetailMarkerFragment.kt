@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.fragment.app.activityViewModels
 import com.example.grafitismap.databinding.FragmentDetailMarkerBinding
 import com.example.grafitismap.viewmodel.GrafitisViewModel
@@ -31,6 +32,7 @@ class DetailMarkerFragment : Fragment() {
         binding.categoryTv.text = marker?.category
         binding.latitudeTv.text = marker?.latitude.toString()
         binding.longitudeTv.text = marker?.longitude.toString()
+        binding.photoIv.setImageURI(marker?.photo?.toUri())
     }
 
 }
