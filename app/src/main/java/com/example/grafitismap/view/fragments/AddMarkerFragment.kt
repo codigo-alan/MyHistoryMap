@@ -35,12 +35,8 @@ class AddMarkerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //arguments from start fragment
-        //TODO view wrong assignment 0.0 when are null
         /*val latitude = arguments?.getFloat("latitude_to_add")?.toDouble()
         val longitude = arguments?.getFloat("longitude_to_add")?.toDouble()*/
-
-
-
         /*if (latitude != null && longitude != null) {
             binding.latitudeEt.setText(latitude.toString())
             binding.longitudeEt.setText(longitude.toString())
