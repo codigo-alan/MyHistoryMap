@@ -21,22 +21,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!--TODO DELETE Not visible now-->
-    <EditText
-        android:id="@+id/categoryEt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="Categoría *"
-        android:inputType="text"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameEt" />
-
     <EditText
         android:id="@+id/latitudeEt"
         android:layout_width="match_parent"
@@ -65,13 +49,14 @@
         app:layout_constraintTop_toBottomOf="@id/latitudeEt"/>
 
 
+
     <Button
         android:id="@+id/takePhtoBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/rounded_grey_btn"
+        android:background="@drawable/rounded_btn"
         android:text="Foto"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/longitudeEt" />
@@ -107,6 +92,32 @@
             android:inputType="none"
             android:hint="Categoría" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <!--<LinearLayout
+        android:id="@+id/frameTakePhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/longitudeEt"
+        android:padding="16dp"
+        android:layout_marginTop="48dp">
+
+        <ImageView
+            android:id="@+id/imageAddPhoto"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/baseline_home_work_24" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="TextView" />
+
+
+    </LinearLayout>-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
