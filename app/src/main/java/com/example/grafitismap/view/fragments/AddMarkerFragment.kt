@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
@@ -17,7 +19,7 @@ import com.example.grafitismap.models.MarkerModel
 import com.example.grafitismap.viewmodel.GrafitisViewModel
 
 
-class AddMarkerFragment : Fragment() {
+class AddMarkerFragment : Fragment(), AdapterView.OnItemClickListener {
 
     private lateinit var binding: FragmentAddMarkerBinding
     private val viewModel : GrafitisViewModel by activityViewModels()
@@ -34,32 +36,32 @@ class AddMarkerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //arguments from start fragment
-        /*val latitude = arguments?.getFloat("latitude_to_add")?.toDouble()
-        val longitude = arguments?.getFloat("longitude_to_add")?.toDouble()*/
-        /*if (latitude != null && longitude != null) {
-            binding.latitudeEt.setText(latitude.toString())
-            binding.longitudeEt.setText(longitude.toString())
-        }*/
-
+        //set values added if there are
         binding.nameEt.setText(viewModel.newMarkerTemp.name)
-        binding.categoryEt.setText(viewModel.newMarkerTemp.category)
+        binding.autoCompleteTextView.setText(viewModel.newMarkerTemp.category)
         binding.latitudeEt.setText(viewModel.newMarkerTemp.latitude.toString())
         binding.longitudeEt.setText(viewModel.newMarkerTemp.longitude.toString())
+        //Dropdown
+        val categories = resources.getStringArray(R.array.category)//string array
+        val adapter = ArrayAdapter(requireContext(), R.layout.dropdown_item,categories)//array adapter to put later in autoCompleteTextView
+        with(binding.autoCompleteTextView){
+            setAdapter(adapter)
+            onItemClickListener = this@AddMarkerFragment //this is the context in fragments maybe
+        }
 
         binding.takePhtoBtn.setOnClickListener {
             viewModel.newMarkerTemp.name = binding.nameEt.text.toString()
-            viewModel.newMarkerTemp.category = binding.categoryEt.text.toString()
+            viewModel.newMarkerTemp.category = binding.autoCompleteTextView.text.toString()
             viewModel.newMarkerTemp.latitude = binding.latitudeEt.text.toString().toDouble()
             viewModel.newMarkerTemp.longitude = binding.longitudeEt.text.toString().toDouble()
+            Log.d("NEWTEMP", "${viewModel.newMarkerTemp}")
             findNavController().navigate(R.id.action_addMarkerFragment_to_cameraFragment)
         }
 
         binding.addMarkerBtn.setOnClickListener {
-
             if (getFormState(binding)) {
                 val name = binding.nameEt.text.toString()
-                val category = binding.categoryEt.text.toString()
+                val category = binding.autoCompleteTextView.text.toString()
                 val newLatitude = binding.latitudeEt.text.toString().toDouble()
                 val newLongitude = binding.longitudeEt.text.toString().toDouble()
 
@@ -67,8 +69,8 @@ class AddMarkerFragment : Fragment() {
                 viewModel.newMarkerTemp.category = category
                 viewModel.newMarkerTemp.latitude = newLatitude
                 viewModel.newMarkerTemp.longitude = newLongitude
-
                 Log.d("NEW", "${viewModel.newMarkerTemp}")
+
                 viewModel.addMarker(viewModel.newMarkerTemp)
                 Toast.makeText(context,"Agregado nuevo Marker",Toast.LENGTH_SHORT).show()
                 findNavController().navigate(R.id.action_addMarkerFragment_to_mapFragment)
@@ -81,9 +83,14 @@ class AddMarkerFragment : Fragment() {
 
     private fun getFormState(binding: FragmentAddMarkerBinding): Boolean {
         return  binding.nameEt.text.isNotEmpty() &&
-                binding.categoryEt.text.isNotEmpty() &&
+                binding.autoCompleteTextView.text.isNotEmpty() &&
                 binding.latitudeEt.text.isNotEmpty() &&
                 binding.longitudeEt.text.isNotEmpty()
+    }
+
+    override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        val item = parent?.getItemAtPosition(position).toString()
+        viewModel.newMarkerTemp.category = item
     }
 
 }

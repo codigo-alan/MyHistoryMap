@@ -12,4 +12,10 @@
     <string name="signup_btn">Crear cuenta</string>
     <string name="drawer_item_map">Ver mapa</string>
     <string name="drawer_menu_item_markers">Marcadores</string>
+
+    <!-- Dropdown category -->
+    <string-array name="category">
+        <item>Acontecimiento</item>
+        <item>Edificio</item>
+    </string-array>
 </resources>
