@@ -160,6 +160,15 @@
         app:layout_constraintStart_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toTopOf="@+id/toRegisterTv" />
 
+    <TextView
+        android:id="@+id/spanTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Contraseñas no coinciden."
+        android:textColor="@color/red"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/repeatPasswordEt"
+        app:layout_constraintTop_toBottomOf="@+id/repeatPasswordEt" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
