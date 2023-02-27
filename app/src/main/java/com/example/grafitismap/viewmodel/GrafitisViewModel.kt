@@ -12,7 +12,7 @@ class GrafitisViewModel: ViewModel() {
     var selectedMarkerModel = MutableLiveData<MarkerModel>()
     var newMarkerTemp = MarkerModel("","","",-1.0,-1.0)
 
-    var data = MutableLiveData<List<Marker>>().apply { value = listOf() } //temporal markers list
+    var data = MutableLiveData<List<Marker>>().apply { value = listOf() } //temporal markers list of entity
     var selectedMarker = MutableLiveData<Marker>()
     val realmRepo = MutableLiveData<RealmRepo>()
 
