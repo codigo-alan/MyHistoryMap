@@ -1,5 +1,6 @@
 package com.example.grafitismap.database
 
+import com.example.grafitismap.models.Category
 import com.example.grafitismap.models.Marker
 import io.realm.kotlin.ext.query
 import io.realm.kotlin.log.LogLevel
@@ -30,16 +31,16 @@ class RealmRepo {
                 .log(LogLevel.ALL)
                 .build())
 
-    private fun remoteConfig() = SyncConfiguration.Builder(this.user, setOf(Marker::class))
+    private fun remoteConfig() = SyncConfiguration.Builder(this.user, setOf(Marker::class, Category::class))
         .initialSubscriptions { realm ->
             add(
                 realm.query<Marker>(),
                 "All Markers"
             )
-            add(
+            /*add(
                 realm.query<Marker>("owner_id == $0", realmApp.currentUser!!.id),
                 "User's Markers"
-            )
+            )*/
         }
         .waitForInitialRemoteData()
         .build()
