@@ -34,8 +34,8 @@ const val REQUEST_CODE_LOCATION = 100
 
 class MapFragment : Fragment(), OnMapReadyCallback {
 
-    private lateinit var binding: FragmentMapBinding
     lateinit var map: GoogleMap
+    private lateinit var binding: FragmentMapBinding
     private val viewModel : GrafitisViewModel by activityViewModels()
 
     override fun onCreateView(

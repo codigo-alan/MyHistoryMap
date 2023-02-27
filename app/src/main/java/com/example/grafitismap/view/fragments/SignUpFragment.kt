@@ -57,8 +57,9 @@ class SignUpFragment : Fragment() {
             val email = binding.emailEt.text.toString()
             val password = binding.passwordEt.text.toString()
 
-            viewModel.registerUser(email, password)
-            viewModel.loginUser(email, password)
+            //viewModel.realmRepo.register(email, password) //register
+            //val creds = viewModel.realmRepo.getCredentials(email, password)//creds to login
+            //viewModel.realmRepo.login(creds) //login
 
             val intent = Intent(activity, MainActivity::class.java)
             startActivity(intent)

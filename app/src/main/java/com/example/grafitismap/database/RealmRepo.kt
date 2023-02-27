@@ -1,25 +1,20 @@
 package com.example.grafitismap.database
 
 import com.example.grafitismap.models.Category
-import com.example.grafitismap.models.Marker
+import com.example.grafitismap.models.MarkerEntity
+import io.realm.kotlin.Realm
 import io.realm.kotlin.ext.query
 import io.realm.kotlin.log.LogLevel
-import io.realm.kotlin.mongodb.App
-import io.realm.kotlin.mongodb.AppConfiguration
-import io.realm.kotlin.mongodb.Credentials
-import io.realm.kotlin.mongodb.User
+import io.realm.kotlin.mongodb.*
 import io.realm.kotlin.mongodb.sync.SyncConfiguration
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class RealmRepo {
     var realmApp : App
     lateinit var user : User
     lateinit var config : SyncConfiguration
     //lateinit var creds : Credentials
-
+    var realm : Realm? = null
     init {
         realmApp = createRealmApp()
         //user = realmApp.currentUser!!
@@ -31,25 +26,38 @@ class RealmRepo {
                 .log(LogLevel.ALL)
                 .build())
 
-    private fun remoteConfig() = SyncConfiguration.Builder(this.user, setOf(Marker::class, Category::class))
+    private fun remoteConfig() = SyncConfiguration.Builder(this.user, setOf(MarkerEntity::class, Category::class))
         .initialSubscriptions { realm ->
             add(
-                realm.query<Marker>(),
+                realm.query<MarkerEntity>(),
                 "All Markers"
             )
-            /*add(
-                realm.query<Marker>("owner_id == $0", realmApp.currentUser!!.id),
-                "User's Markers"
-            )*/
         }
         .waitForInitialRemoteData()
         .build()
 
+    fun openConnections(){
+        realm = Realm.open(this.config)
+        runBlocking {
+            realm?.subscriptions?.waitForSynchronization()
+        }
+    }
 
-    fun getCredentials(email: String, password: String) =
+    /* Block to write in realm TODO
+    realm.writeBlocking {
+        val sport = SportRealm(
+            sport = userSport,
+            hours = userHours,
+            owner_id = user.id
+        )
+        copyToRealm(sport)
+    }
+     */
+    private fun getCredentials(email: String, password: String) =
         Credentials.emailPassword(email, password)
 
-    fun login(credentials: Credentials){ //TODO verify
+    fun login(email: String, password: String){ //TODO verify
+        val credentials = getCredentials(email, password)
         CoroutineScope(Dispatchers.IO).launch {
             realmApp.login(credentials)
             user = realmApp.currentUser!!
@@ -60,13 +68,10 @@ class RealmRepo {
     fun register(email: String, password: String){ //TODO verify
         CoroutineScope(Dispatchers.IO).launch {
             realmApp.emailPasswordAuth.registerUser(email, password)
-            withContext(Dispatchers.Main) {
-
-            }
         }
-
     }
 
+    fun loggedIn() = realmApp.currentUser?.loggedIn ?: false
 
 
 

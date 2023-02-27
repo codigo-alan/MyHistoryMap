@@ -4,7 +4,7 @@ import io.realm.kotlin.types.ObjectId
 import io.realm.kotlin.types.RealmObject
 import io.realm.kotlin.types.annotations.PrimaryKey
 
-open class Marker (
+open class MarkerEntity (
     @PrimaryKey
     var _id: ObjectId = ObjectId.create() ,
     var name: String = "" ,
