@@ -51,7 +51,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.openConnections() //open connection to realm TODO from service locator?
+        //viewModel.openConnections() //open connection to realm
     }
 
     override fun onMapReady(googleMap: GoogleMap) {

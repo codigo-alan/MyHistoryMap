@@ -35,7 +35,7 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
         }
 
-        binding.loginBtnId.isEnabled = binding.emailEt.text.isNotEmpty() && binding.passwordEt.text.isNotEmpty()
+        //binding.loginBtnId.isEnabled = binding.emailEt.text.isNotEmpty() && binding.passwordEt.text.isNotEmpty()
 
         binding.loginBtnId.setOnClickListener {
             val email = binding.emailEt.text.toString()
@@ -43,9 +43,7 @@ class LoginFragment : Fragment() {
 
             viewModel.login(email, password)
 
-            val intent = Intent(activity, MainActivity::class.java)
-            startActivity(intent)
-            activity?.finish() //TODO consultar esto
+            findNavController().navigate(R.id.action_loginFragment_to_mapFragment)
         }
     }
 

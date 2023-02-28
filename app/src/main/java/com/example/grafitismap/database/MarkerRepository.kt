@@ -3,22 +3,24 @@ package com.example.grafitismap.database
 import com.example.grafitismap.models.MarkerEntity
 import com.example.grafitismap.models.MarkerModel
 import io.realm.kotlin.Realm
+import io.realm.kotlin.ext.query
 import io.realm.kotlin.mongodb.User
+import java.util.concurrent.Flow
 
 /**
  * To do all the operations like filters in db.
  */
 
-class EntityRepository(val realm: Realm) {
+class MarkerRepository(val realm: Realm) {
 
-    //val realm = realm
+    fun markersListFlow() = realm.query<MarkerEntity>().find().asFlow()
     fun addMarkerEntity(newMarkerModel: MarkerModel, user: User){
         realm.writeBlocking {
             val markerEntity = MarkerEntity(
                 name = newMarkerModel.name,
-                //category = TODO how put Category type
+                category = null,//TODO how put Category type
                 photo = newMarkerModel.photo,
-                latitude = newMarkerModel.latitude.toString(),//TODO error with Long, need String
+                latitude = newMarkerModel.latitude.toString(),
                 longitude = newMarkerModel.longitude.toString(),
                 owner_id = user.id
             )

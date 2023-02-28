@@ -2,9 +2,12 @@ package com.example.grafitismap.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.grafitismap.database.EntityRepository
+import androidx.lifecycle.asLiveData
+import com.example.grafitismap.database.MarkerRepository
 import com.example.grafitismap.database.ServiceLocator
+import com.example.grafitismap.models.MarkerEntity
 import com.example.grafitismap.models.MarkerModel
+import kotlinx.coroutines.flow.map
 
 class GrafitisViewModel: ViewModel() {
     var markersLiveData = MutableLiveData<List<MarkerModel>>().apply { value = listOf() }
@@ -13,11 +16,13 @@ class GrafitisViewModel: ViewModel() {
 
     //Realm
     val realmRepo = ServiceLocator.realmRepo
-    var entityRepository : EntityRepository
+    var markerRepository : MarkerRepository
+    var markersListLiveData = MutableLiveData<List<MarkerEntity>>().apply { value = listOf() }
 
     init {
         ServiceLocator.configureRealm() //initialize the service locator entityRepository
-        entityRepository = ServiceLocator.entityRepository
+        markerRepository = ServiceLocator.markerRepository
+        markersListLiveData = markerRepository.markersListFlow().map { it.list.toList() } as MutableLiveData<List<MarkerEntity>>
     }
 
     fun openConnections(){

@@ -11,14 +11,11 @@ import kotlinx.coroutines.*
 
 class RealmRepo {
     var realmApp : App
-    lateinit var user : User
-    lateinit var config : SyncConfiguration
-    //lateinit var creds : Credentials
+    var user : User? = null
     var realm : Realm? = null
+    lateinit var config : SyncConfiguration
     init {
         realmApp = createRealmApp()
-        //user = realmApp.currentUser!!
-        //config = remoteConfig()
     }
 
     private fun createRealmApp() = App.create(
@@ -26,7 +23,7 @@ class RealmRepo {
                 .log(LogLevel.ALL)
                 .build())
 
-    private fun remoteConfig() = SyncConfiguration.Builder(this.user, setOf(MarkerEntity::class, Category::class))
+    /*private fun remoteConfig() = SyncConfiguration.Builder(this.user!!, setOf(MarkerEntity::class, Category::class))
         .initialSubscriptions { realm ->
             add(
                 realm.query<MarkerEntity>(),
@@ -34,9 +31,13 @@ class RealmRepo {
             )
         }
         .waitForInitialRemoteData()
+        .build()*/
+
+    private fun remoteConfig() = SyncConfiguration.Builder(this.user!!, setOf(MarkerEntity::class, Category::class))
+        .waitForInitialRemoteData()
         .build()
 
-    fun openConnections(){
+    fun openConnections(){//TODO here?
         realm = Realm.open(this.config)
         runBlocking {
             realm?.subscriptions?.waitForSynchronization()

@@ -42,14 +42,14 @@ class SignUpFragment : Fragment() {
             && binding.repeatPasswordEt.text.isNotEmpty()) {
             if (binding.passwordEt.text != binding.repeatPasswordEt.text){
                 binding.spanTv.visibility = View.VISIBLE
-                binding.signUpBtnId.isEnabled = false
+                //binding.signUpBtnId.isEnabled = false
             }else{
                 binding.spanTv.visibility = View.GONE
-                binding.signUpBtnId.isEnabled = true
+                //binding.signUpBtnId.isEnabled = true
             }
         }else{
             binding.spanTv.visibility = View.GONE
-            binding.signUpBtnId.isEnabled = false
+            //binding.signUpBtnId.isEnabled = false
         }
 
         binding.signUpBtnId.setOnClickListener {
@@ -61,9 +61,7 @@ class SignUpFragment : Fragment() {
             viewModel.register(email, password)
             viewModel.login(email, password)
 
-            val intent = Intent(activity, MainActivity::class.java)
-            startActivity(intent)
-            activity?.finish() //TODO consultar esto
+            findNavController().navigate(R.id.action_signUpFragment_to_mapFragment)
         }
 
 
