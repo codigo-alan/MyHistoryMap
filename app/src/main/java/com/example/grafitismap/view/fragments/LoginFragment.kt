@@ -13,12 +13,13 @@ import com.example.grafitismap.R
 import com.example.grafitismap.databinding.FragmentLoginBinding
 import com.example.grafitismap.view.MainActivity
 import com.example.grafitismap.viewmodel.GrafitisViewModel
+import com.example.grafitismap.viewmodel.RegisterViewModel
 
 
 class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
-    private val viewModel : GrafitisViewModel by activityViewModels()
+    private val viewModel : RegisterViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,7 +40,8 @@ class LoginFragment : Fragment() {
         binding.loginBtnId.setOnClickListener {
             val email = binding.emailEt.text.toString()
             val password = binding.passwordEt.text.toString()
-            //viewModel.realmRepo.login(creds) //login
+
+            viewModel.login(email, password)
 
             val intent = Intent(activity, MainActivity::class.java)
             startActivity(intent)

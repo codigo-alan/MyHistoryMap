@@ -51,6 +51,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.openConnections() //open connection to realm TODO from service locator?
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -93,7 +94,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         val myMarker = MarkerOptions().position(coordinates)
         map.addMarker(myMarker)
     }
-
 
     private fun isLocationPermissionGranted(): Boolean {
         return ContextCompat.checkSelfPermission(requireContext(),
@@ -186,8 +186,5 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 Toast.LENGTH_SHORT).show()
         }
     }
-
-
-
 
 }

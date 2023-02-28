@@ -43,16 +43,6 @@ class RealmRepo {
         }
     }
 
-    /* Block to write in realm TODO
-    realm.writeBlocking {
-        val sport = SportRealm(
-            sport = userSport,
-            hours = userHours,
-            owner_id = user.id
-        )
-        copyToRealm(sport)
-    }
-     */
     private fun getCredentials(email: String, password: String) =
         Credentials.emailPassword(email, password)
 

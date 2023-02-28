@@ -2,6 +2,8 @@ package com.example.grafitismap.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.grafitismap.database.EntityRepository
+import com.example.grafitismap.database.ServiceLocator
 import com.example.grafitismap.models.MarkerModel
 
 class GrafitisViewModel: ViewModel() {
@@ -9,11 +11,18 @@ class GrafitisViewModel: ViewModel() {
     var selectedMarkerModel = MutableLiveData<MarkerModel>()
     var newMarkerTemp = MarkerModel("","","",-1.0,-1.0)
 
-    //temporal for realm
-    /*var data = MutableLiveData<List<MarkerEntity>>().apply { value = listOf() } //temporal markers list of entity
-    val realmRepo = ServiceLocator.realmRepo //contains all data from realm*/
+    //Realm
+    val realmRepo = ServiceLocator.realmRepo
+    var entityRepository : EntityRepository
 
+    init {
+        ServiceLocator.configureRealm() //initialize the service locator entityRepository
+        entityRepository = ServiceLocator.entityRepository
+    }
 
+    fun openConnections(){
+        realmRepo.openConnections()
+    }
     fun selectMarker(newMarkerModel: MarkerModel){
         selectedMarkerModel.postValue(newMarkerModel)
     }
@@ -22,13 +31,5 @@ class GrafitisViewModel: ViewModel() {
     }
 
 
-/*    fun registerUser(email: String, password: String){
-        this.realmRepo.register(email, password)
-    }*/
-    /*fun loginUser(email: String, password: String){
-        val creds = this.realmRepo.value?.getCredentials(email, password)
-        this.realmRepo.login(creds!!) //TODO be carefull with null
-    }*/
-    //fun verifyLogged() = this.realmRepo.loggedIn() ?: false
 
 }
