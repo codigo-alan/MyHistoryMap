@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.grafitismap.R
+import com.example.grafitismap.database.ServiceLocator
 import com.example.grafitismap.databinding.FragmentMapBinding
 import com.example.grafitismap.models.MarkerModel
 import com.example.grafitismap.viewmodel.GrafitisViewModel
@@ -51,7 +52,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //viewModel.openConnections() //open connection to realm
+        //val markerRepo = ServiceLocator.markerRepository
     }
 
     override fun onMapReady(googleMap: GoogleMap) {

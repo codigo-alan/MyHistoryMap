@@ -10,6 +10,7 @@ import io.realm.kotlin.mongodb.sync.SyncConfiguration
 import kotlinx.coroutines.*
 
 class RealmRepo {
+    //TODO make coroutines in viewModel, here only suspend
     var realmApp : App
     var user : User? = null
     var realm : Realm? = null
@@ -23,25 +24,20 @@ class RealmRepo {
                 .log(LogLevel.ALL)
                 .build())
 
-    /*private fun remoteConfig() = SyncConfiguration.Builder(this.user!!, setOf(MarkerEntity::class, Category::class))
-        .initialSubscriptions { realm ->
-            add(
-                realm.query<MarkerEntity>(),
-                "All Markers"
-            )
-        }
-        .waitForInitialRemoteData()
-        .build()*/
-
-    private fun remoteConfig() = SyncConfiguration.Builder(this.user!!, setOf(MarkerEntity::class, Category::class))
-        .waitForInitialRemoteData()
-        .build()
-
-    fun openConnections(){//TODO here?
+    private suspend fun remoteConfig() {
+        config = SyncConfiguration.Builder(this.user!!, setOf(MarkerEntity::class, Category::class))
+            .initialSubscriptions { realm ->
+                add(
+                    realm.query<MarkerEntity>(),
+                    "All Markers"
+                )
+            }
+            .waitForInitialRemoteData()
+            .build()
         realm = Realm.open(this.config)
-        runBlocking {
-            realm?.subscriptions?.waitForSynchronization()
-        }
+        realm!!.subscriptions.waitForSynchronization()
+
+        ServiceLocator.configureRealm() //initialize the service locator entityRepository
     }
 
     private fun getCredentials(email: String, password: String) =
@@ -52,7 +48,7 @@ class RealmRepo {
         CoroutineScope(Dispatchers.IO).launch {
             realmApp.login(credentials)
             user = realmApp.currentUser!!
-            config = remoteConfig()
+            remoteConfig()
         }
     }
 

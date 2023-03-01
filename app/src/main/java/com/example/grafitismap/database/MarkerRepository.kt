@@ -5,6 +5,7 @@ import com.example.grafitismap.models.MarkerModel
 import io.realm.kotlin.Realm
 import io.realm.kotlin.ext.query
 import io.realm.kotlin.mongodb.User
+import kotlinx.coroutines.flow.map
 import java.util.concurrent.Flow
 
 /**
@@ -13,7 +14,7 @@ import java.util.concurrent.Flow
 
 class MarkerRepository(val realm: Realm) {
 
-    fun markersListFlow() = realm.query<MarkerEntity>().find().asFlow()
+    fun markersListFlow() = realm.query<MarkerEntity>().find().asFlow().map { it.list.toList() }
     fun addMarkerEntity(newMarkerModel: MarkerModel, user: User){
         realm.writeBlocking {
             val markerEntity = MarkerEntity(

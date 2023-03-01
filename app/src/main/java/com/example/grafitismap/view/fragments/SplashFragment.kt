@@ -1,6 +1,7 @@
 package com.example.grafitismap.view.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.grafitismap.R
+import com.example.grafitismap.database.ServiceLocator
 import com.example.grafitismap.databinding.FragmentSplashBinding
 import com.example.grafitismap.viewmodel.SplashViewModel
 
@@ -28,8 +30,12 @@ class SplashFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+
         if(viewModel.loggedIn()){
+            Log.d("logged","${viewModel.loggedIn()}")
             //go to map
+            //ServiceLocator.configureRealm()
             findNavController().navigate(R.id.action_splashFragment_to_mapFragment)
         }else{
             //go to login
