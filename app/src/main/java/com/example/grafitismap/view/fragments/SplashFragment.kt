@@ -34,7 +34,8 @@ class SplashFragment : Fragment() {
             Log.d("logged","${ServiceLocator.realmRepo.user}")
             viewModel.remoteConfig()
             //go to map
-            findNavController().navigate(R.id.action_splashFragment_to_mapFragment)
+            findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
+            //findNavController().navigate(R.id.action_splashFragment_to_mapFragment)
         }else{
             //go to login
             findNavController().navigate(R.id.action_splashFragment_to_loginFragment)

@@ -53,6 +53,10 @@ class RealmRepo {
 
     }
 
+    suspend fun logout(){
+        //TODO
+    }
+
     suspend fun register(email: String, password: String){
 
         realmApp.emailPasswordAuth.registerUser(email, password)

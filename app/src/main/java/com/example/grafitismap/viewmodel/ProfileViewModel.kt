@@ -7,24 +7,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class RegisterViewModel : ViewModel() {
+class ProfileViewModel : ViewModel() {
 
     val realmRepo = ServiceLocator.realmRepo
 
-    fun register(email: String, password: String){
+    fun logout(){
         viewModelScope.launch {
             withContext(Dispatchers.IO){
-                realmRepo.register(email, password)
+                realmRepo.logout()
             }
         }
     }
-
-    fun login(email: String, password: String){
-        viewModelScope.launch {
-            withContext(Dispatchers.IO){
-                realmRepo.login(email, password)
-            }
-        }
-    }
-
 }
