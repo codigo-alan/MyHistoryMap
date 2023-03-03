@@ -1,9 +1,12 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt' //used in several dependencies (room,glide)
+    id 'kotlin-kapt' //used in several dependencies (room,glide,realm)
     id("androidx.navigation.safeargs.kotlin")
+
 }
+apply plugin: 'kotlin-kapt'//may be out
+apply plugin: "realm-android"
 
 android {
     namespace 'com.example.grafitismap'
@@ -34,6 +37,9 @@ android {
     }
     viewBinding{
         enabled = true
+    }
+    realm {
+        syncEnabled = true
     }
 }
 

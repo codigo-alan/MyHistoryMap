@@ -30,12 +30,10 @@ class SplashFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
         if(viewModel.loggedIn()){
-            Log.d("logged","${viewModel.loggedIn()}")
+            Log.d("logged","${ServiceLocator.realmRepo.user}")
+            viewModel.remoteConfig()
             //go to map
-            //ServiceLocator.configureRealm()
             findNavController().navigate(R.id.action_splashFragment_to_mapFragment)
         }else{
             //go to login

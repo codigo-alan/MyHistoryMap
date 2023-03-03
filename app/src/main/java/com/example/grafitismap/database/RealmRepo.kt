@@ -10,13 +10,14 @@ import io.realm.kotlin.mongodb.sync.SyncConfiguration
 import kotlinx.coroutines.*
 
 class RealmRepo {
-    //TODO make coroutines in viewModel, here only suspend
+
     var realmApp : App
     var user : User? = null
     var realm : Realm? = null
     lateinit var config : SyncConfiguration
     init {
         realmApp = createRealmApp()
+        user = realmApp.currentUser
     }
 
     private fun createRealmApp() = App.create(
@@ -24,7 +25,7 @@ class RealmRepo {
                 .log(LogLevel.ALL)
                 .build())
 
-    private suspend fun remoteConfig() {
+    suspend fun remoteConfig() {
         config = SyncConfiguration.Builder(this.user!!, setOf(MarkerEntity::class, Category::class))
             .initialSubscriptions { realm ->
                 add(
@@ -43,19 +44,19 @@ class RealmRepo {
     private fun getCredentials(email: String, password: String) =
         Credentials.emailPassword(email, password)
 
-    fun login(email: String, password: String){ //TODO verify
+    suspend fun login(email: String, password: String){
+
         val credentials = getCredentials(email, password)
-        CoroutineScope(Dispatchers.IO).launch {
-            realmApp.login(credentials)
-            user = realmApp.currentUser!!
-            remoteConfig()
-        }
+        realmApp.login(credentials)
+        user = realmApp.currentUser!!
+        remoteConfig()
+
     }
 
-    fun register(email: String, password: String){ //TODO verify
-        CoroutineScope(Dispatchers.IO).launch {
-            realmApp.emailPasswordAuth.registerUser(email, password)
-        }
+    suspend fun register(email: String, password: String){
+
+        realmApp.emailPasswordAuth.registerUser(email, password)
+
     }
 
     fun loggedIn() = realmApp.currentUser?.loggedIn ?: false

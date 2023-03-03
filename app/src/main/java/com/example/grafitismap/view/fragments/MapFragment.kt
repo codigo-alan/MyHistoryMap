@@ -52,7 +52,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //val markerRepo = ServiceLocator.markerRepository
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
