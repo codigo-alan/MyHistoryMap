@@ -34,7 +34,7 @@ class ProfileFragment : Fragment() {
         }
 
         viewModel.userState.observe(viewLifecycleOwner){
-            if (it) findNavController().navigate(R.id.action_profileFragment_to_loginFragment)
+            if (!it) findNavController().navigate(R.id.action_profileFragment_to_loginFragment)
         }
 
     }

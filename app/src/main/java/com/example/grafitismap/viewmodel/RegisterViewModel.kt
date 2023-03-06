@@ -16,6 +16,7 @@ class RegisterViewModel : ViewModel() {
         viewModelScope.launch {
             withContext(Dispatchers.IO){
                 realmRepo.register(email, password)
+                //TODO verify register and then login in fragments. Be careful with coroutines
             }
         }
     }
@@ -24,6 +25,7 @@ class RegisterViewModel : ViewModel() {
         viewModelScope.launch {
             withContext(Dispatchers.IO){
                 realmRepo.login(email, password)
+                userState.postValue(true)
             }
         }
     }
