@@ -15,8 +15,13 @@ class RegisterViewModel : ViewModel() {
     fun register(email: String, password: String){
         viewModelScope.launch {
             withContext(Dispatchers.IO){
-                realmRepo.register(email, password)
-                //TODO verify register and then login in fragments. Be careful with coroutines
+                try {
+                    realmRepo.register(email, password)
+                    realmRepo.login(email, password)
+                    userState.postValue(true)
+                } catch (e: Exception) {
+                    userState.postValue(false)
+                }
             }
         }
     }
@@ -24,8 +29,12 @@ class RegisterViewModel : ViewModel() {
     fun login(email: String, password: String){
         viewModelScope.launch {
             withContext(Dispatchers.IO){
-                realmRepo.login(email, password)
-                userState.postValue(true)
+                try {
+                    realmRepo.login(email, password)
+                    userState.postValue(true)
+                } catch (e: Exception) {
+                    userState.postValue(false)
+                }
             }
         }
     }
@@ -33,8 +42,7 @@ class RegisterViewModel : ViewModel() {
     fun logout(){
         viewModelScope.launch {
             withContext(Dispatchers.IO){
-                //realmRepo.user?.logOut()
-                realmRepo.realmApp.currentUser?.logOut()
+                realmRepo.user?.logOut()
                 userState.postValue(false)
             }
         }

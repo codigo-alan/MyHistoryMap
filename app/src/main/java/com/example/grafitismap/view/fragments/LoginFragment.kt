@@ -32,6 +32,7 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.toRegisterBtn.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
         }
@@ -42,8 +43,6 @@ class LoginFragment : Fragment() {
 
             viewModel.login(email, password)
 
-
-            //findNavController().navigate(R.id.action_loginFragment_to_mapFragment)
         }
 
         viewModel.userState.observe(viewLifecycleOwner){
@@ -52,6 +51,5 @@ class LoginFragment : Fragment() {
         }
 
     }
-
 
 }
