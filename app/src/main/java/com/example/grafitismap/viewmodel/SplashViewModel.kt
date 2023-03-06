@@ -1,5 +1,6 @@
 package com.example.grafitismap.viewmodel
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.grafitismap.database.ServiceLocator
@@ -9,17 +10,25 @@ import kotlinx.coroutines.withContext
 
 class SplashViewModel: ViewModel() {
 
-    val realmRepo = ServiceLocator.realmRepo
+    private val realmRepo = ServiceLocator.realmRepo
+    val nextFragment = MutableLiveData<SplashViewModelState>()
 
-    fun loggedIn() = this.realmRepo.loggedIn()
-    fun remoteConfig() {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO){
-                //val user = realmRepo.user
-                realmRepo.remoteConfig()
+    fun start(){
+        if(loggedIn()){
+            viewModelScope.launch {
+                withContext(Dispatchers.IO){
+                    realmRepo.remoteConfig()
+                    nextFragment.postValue(SplashViewModelState.MAP)
+                }
             }
+        } else {
+            nextFragment.postValue(SplashViewModelState.LOGIN)
         }
     }
+    private fun loggedIn() = this.realmRepo.loggedIn()
 
+}
 
+enum class SplashViewModelState{
+    LOGIN, MAP
 }

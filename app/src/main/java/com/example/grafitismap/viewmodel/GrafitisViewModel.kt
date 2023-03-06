@@ -15,7 +15,6 @@ class GrafitisViewModel: ViewModel() {
     var newMarkerTemp = MarkerModel("","","",-1.0,-1.0)
 
     //Realm
-    //TODO error creating markerRepository, because realm instance of RealmRepo is null.
     var markerRepository : MarkerRepository = ServiceLocator.markerRepository
     //var markersListLiveData = MutableLiveData<List<MarkerEntity>>().apply { value = listOf() }
 

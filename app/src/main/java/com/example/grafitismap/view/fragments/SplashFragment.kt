@@ -12,6 +12,7 @@ import com.example.grafitismap.R
 import com.example.grafitismap.database.ServiceLocator
 import com.example.grafitismap.databinding.FragmentSplashBinding
 import com.example.grafitismap.viewmodel.SplashViewModel
+import com.example.grafitismap.viewmodel.SplashViewModelState
 
 class SplashFragment : Fragment() {
 
@@ -30,15 +31,16 @@ class SplashFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if(viewModel.loggedIn()){
-            Log.d("logged","${ServiceLocator.realmRepo.user}")
-            viewModel.remoteConfig()
-            //go to map
-            findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
-            //findNavController().navigate(R.id.action_splashFragment_to_mapFragment)
-        }else{
-            //go to login
-            findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
+        viewModel.start()
+
+        viewModel.nextFragment.observe(viewLifecycleOwner){
+            if (it == SplashViewModelState.MAP) {
+                //go to map
+                findNavController().navigate(R.id.action_splashFragment_to_mapFragment)
+            } else {
+                //go to login
+                findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
+            }
         }
 
     }
