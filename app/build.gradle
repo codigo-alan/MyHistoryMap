@@ -3,10 +3,10 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt' //used in several dependencies (room,glide,realm)
     id("androidx.navigation.safeargs.kotlin")
-
+    id("io.realm.kotlin") version "1.6.0"  //to realm
 }
-apply plugin: 'kotlin-kapt'//may be out
-apply plugin: "realm-android"
+//apply plugin: 'kotlin-kapt'//may be out
+
 
 android {
     namespace 'com.example.grafitismap'
@@ -38,9 +38,7 @@ android {
     viewBinding{
         enabled = true
     }
-    realm {
-        syncEnabled = true
-    }
+
 }
 
 dependencies {
@@ -81,6 +79,6 @@ dependencies {
     implementation "androidx.camera:camera-view:1.2.0"
     implementation "androidx.camera:camera-extensions:1.2.0"
     //Realm
-    implementation("io.realm.kotlin:library-sync:1.5.0")
+    implementation("io.realm.kotlin:library-sync:1.6.0")
 
 }

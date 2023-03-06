@@ -1,5 +1,6 @@
 package com.example.grafitismap.viewmodel
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.grafitismap.database.ServiceLocator
@@ -10,6 +11,7 @@ import kotlinx.coroutines.withContext
 class RegisterViewModel : ViewModel() {
 
     val realmRepo = ServiceLocator.realmRepo
+    val userState = MutableLiveData<Boolean>()
     fun register(email: String, password: String){
         viewModelScope.launch {
             withContext(Dispatchers.IO){
@@ -22,6 +24,16 @@ class RegisterViewModel : ViewModel() {
         viewModelScope.launch {
             withContext(Dispatchers.IO){
                 realmRepo.login(email, password)
+            }
+        }
+    }
+
+    fun logout(){
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                //realmRepo.user?.logOut()
+                realmRepo.realmApp.currentUser?.logOut()
+                userState.postValue(false)
             }
         }
     }

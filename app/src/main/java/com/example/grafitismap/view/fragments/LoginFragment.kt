@@ -35,8 +35,6 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
         }
 
-        //binding.loginBtnId.isEnabled = binding.emailEt.text.isNotEmpty() && binding.passwordEt.text.isNotEmpty()
-
         binding.loginBtnId.setOnClickListener {
             val email = binding.emailEt.text.toString()
             val password = binding.passwordEt.text.toString()
