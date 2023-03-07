@@ -1,6 +1,7 @@
 package com.example.grafitismap.view.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ import com.example.grafitismap.adapters.OnClickListener
 import com.example.grafitismap.databinding.FragmentMarkersListBinding
 import com.example.grafitismap.models.MarkerModel
 import com.example.grafitismap.viewmodel.GrafitisViewModel
+import com.example.grafitismap.viewmodel.MarkersListViewModel
 
 
 class MarkersListFragment : Fragment(), OnClickListener {
@@ -24,7 +26,7 @@ class MarkersListFragment : Fragment(), OnClickListener {
     private lateinit var binding: FragmentMarkersListBinding
     private lateinit var markerAdapter: MarkerAdapter
     private lateinit var myLayoutManager: RecyclerView.LayoutManager
-    private val viewModel: GrafitisViewModel by activityViewModels()
+    private val viewModel: MarkersListViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,7 +40,12 @@ class MarkersListFragment : Fragment(), OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Log.d("list","${viewModel.markersEntityLiveData.value}")
+        Log.d("list","${viewModel.markersModelLiveData.value}")
+        //viewModel.entityToModel()
         markerAdapter = MarkerAdapter(viewModel.markersModelLiveData.value!!, this)
+
+
 
         viewModel.markersModelLiveData.observe(viewLifecycleOwner){
             markerAdapter.setMarkers(it)

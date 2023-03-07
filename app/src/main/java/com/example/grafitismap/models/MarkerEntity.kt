@@ -17,5 +17,14 @@ open class MarkerEntity (
     constructor() : this(owner_id = "") {}
     override fun toString() = "Marker($_id, $name, $photo, $latitude, $longitude, $owner_id)"
 
+    fun toModel(): MarkerModel {
+        return MarkerModel(
+            this.name,
+            this.category.toString(),
+            this.photo,
+            this.latitude.toDouble(),
+            this.longitude.toDouble()
+        )
+    }
 
 }

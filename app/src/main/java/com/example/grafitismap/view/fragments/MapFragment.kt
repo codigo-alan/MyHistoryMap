@@ -63,7 +63,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 MarkerModel("","","", coordinates.latitude, coordinates.longitude)
             findNavController().navigate(R.id.action_mapFragment_to_addMarkerFragment)
         }
-        Log.d("markersEntity","${viewModel.markersEntityLiveData.value}")
+
     }
 
     private fun moveToNewMarker() {
