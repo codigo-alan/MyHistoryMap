@@ -5,29 +5,30 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.example.grafitismap.database.MarkerRepository
 import com.example.grafitismap.database.ServiceLocator
-import com.example.grafitismap.models.MarkerEntity
 import com.example.grafitismap.models.MarkerModel
-import kotlinx.coroutines.flow.map
+import com.example.grafitismap.models.modelToEntity
 
 class GrafitisViewModel: ViewModel() {
-    var markersLiveData = MutableLiveData<List<MarkerModel>>().apply { value = listOf() }
+    var markersModelLiveData = MutableLiveData<List<MarkerModel>>().apply { value = listOf() }
     var selectedMarkerModel = MutableLiveData<MarkerModel>()
     var newMarkerTemp = MarkerModel("","","",-1.0,-1.0)
 
     //Realm
     var realmRepo = ServiceLocator.realmRepo
     var markerRepository : MarkerRepository = ServiceLocator.markerRepository
-    //var markersListLiveData = markerRepository.markersListFlow().asLiveData()
+    var markersEntityLiveData = markerRepository.markersListFlow().asLiveData()
+
 
     fun addMarkerEntity(newMarkerModel: MarkerModel){
-        markerRepository.addMarkerEntity(newMarkerModel, realmRepo.user!!)
+        val newMarkerEntity = modelToEntity(newMarkerModel, realmRepo.user!!)
+        markerRepository.addMarkerEntity(newMarkerEntity)
     }
 
     fun selectMarker(newMarkerModel: MarkerModel){
         selectedMarkerModel.postValue(newMarkerModel)
     }
     fun addMarker(newMarkerModel: MarkerModel){
-        markersLiveData.postValue(markersLiveData.value?.plus(newMarkerModel))
+        markersModelLiveData.postValue(markersModelLiveData.value?.plus(newMarkerModel))
     }
 
 

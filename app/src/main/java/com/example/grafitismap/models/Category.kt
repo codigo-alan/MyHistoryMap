@@ -13,6 +13,6 @@ open class Category(
     constructor() : this(owner_id = "") {}
 
     override fun toString(): String {
-        return "Category($_id, $name)"
+        return "$name"
     }
 }

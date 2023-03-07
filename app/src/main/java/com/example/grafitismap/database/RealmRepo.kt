@@ -32,6 +32,10 @@ class RealmRepo {
                     realm.query<MarkerEntity>(),
                     "All Markers"
                 )
+                add(
+                    realm.query<Category>(),
+                    "All Category"
+                )
             }
             .waitForInitialRemoteData()
             .build()

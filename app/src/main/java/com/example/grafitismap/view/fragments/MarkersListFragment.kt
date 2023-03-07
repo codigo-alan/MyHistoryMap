@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import androidx.recyclerview.widget.RecyclerView
@@ -39,9 +38,9 @@ class MarkersListFragment : Fragment(), OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        markerAdapter = MarkerAdapter(viewModel.markersLiveData.value!!, this)
+        markerAdapter = MarkerAdapter(viewModel.markersModelLiveData.value!!, this)
 
-        viewModel.markersLiveData.observe(viewLifecycleOwner){
+        viewModel.markersModelLiveData.observe(viewLifecycleOwner){
             markerAdapter.setMarkers(it)
         }
 

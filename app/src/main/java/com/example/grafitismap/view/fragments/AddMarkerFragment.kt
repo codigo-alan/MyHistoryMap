@@ -71,7 +71,8 @@ class AddMarkerFragment : Fragment(), AdapterView.OnItemClickListener {
                 viewModel.newMarkerTemp.longitude = newLongitude
                 Log.d("NEW", "${viewModel.newMarkerTemp}")
 
-                viewModel.addMarker(viewModel.newMarkerTemp)
+                //viewModel.addMarker(viewModel.newMarkerTemp)
+                viewModel.addMarkerEntity(viewModel.newMarkerTemp)
                 Toast.makeText(context,"Agregado nuevo Marker",Toast.LENGTH_SHORT).show()
                 findNavController().navigate(R.id.action_addMarkerFragment_to_mapFragment)
             } else {
