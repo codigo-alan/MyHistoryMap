@@ -15,8 +15,13 @@ class GrafitisViewModel: ViewModel() {
     var newMarkerTemp = MarkerModel("","","",-1.0,-1.0)
 
     //Realm
+    var realmRepo = ServiceLocator.realmRepo
     var markerRepository : MarkerRepository = ServiceLocator.markerRepository
-    //var markersListLiveData = MutableLiveData<List<MarkerEntity>>().apply { value = listOf() }
+    //var markersListLiveData = markerRepository.markersListFlow().asLiveData()
+
+    fun addMarkerEntity(newMarkerModel: MarkerModel){
+        markerRepository.addMarkerEntity(newMarkerModel, realmRepo.user!!)
+    }
 
     fun selectMarker(newMarkerModel: MarkerModel){
         selectedMarkerModel.postValue(newMarkerModel)

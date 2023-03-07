@@ -14,7 +14,7 @@ class ProfileViewModel : ViewModel() {
     fun logout(){
         viewModelScope.launch {
             withContext(Dispatchers.IO){
-                realmRepo.logout()
+
             }
         }
     }
