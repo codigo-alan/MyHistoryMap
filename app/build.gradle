@@ -11,11 +11,13 @@ plugins {
 android {
     namespace 'com.example.grafitismap'
     compileSdk 33
+    compileSdkPreview = "UpsideDownCake" //comment this line in ITB
 
     defaultConfig {
         applicationId "com.example.grafitismap"
         minSdk 24
         targetSdk 33
+        targetSdkPreview = "UpsideDownCake"  //comment this line in ITB
         versionCode 1
         versionName "1.0"
 

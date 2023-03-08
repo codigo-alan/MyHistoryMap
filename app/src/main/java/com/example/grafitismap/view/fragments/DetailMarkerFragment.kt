@@ -9,12 +9,12 @@ import androidx.core.net.toUri
 import androidx.fragment.app.activityViewModels
 import com.example.grafitismap.databinding.FragmentDetailMarkerBinding
 import com.example.grafitismap.viewmodel.GrafitisViewModel
-import com.example.grafitismap.viewmodel.MarkersListViewModel
+
 
 class DetailMarkerFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailMarkerBinding
-    private val viewModel: MarkersListViewModel by activityViewModels()
+    private val viewModel: GrafitisViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
