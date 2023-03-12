@@ -39,8 +39,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.signUpFragment,
                 R.id.mapFragment,
                 R.id.addMarkerFragment,
-                R.id.profileFragment,
-                R.id.detailMarkerFragment
+                R.id.profileFragment
             ), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
