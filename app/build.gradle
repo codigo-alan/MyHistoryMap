@@ -11,13 +11,13 @@ plugins {
 android {
     namespace 'com.example.grafitismap'
     compileSdk 33
-    compileSdkPreview = "UpsideDownCake" //comment this line in ITB
+    //compileSdkPreview = "UpsideDownCake" //comment this line in ITB
 
     defaultConfig {
         applicationId "com.example.grafitismap"
         minSdk 24
         targetSdk 33
-        targetSdkPreview = "UpsideDownCake"  //comment this line in ITB
+        //targetSdkPreview = "UpsideDownCake"  //comment this line in ITB
         versionCode 1
         versionName "1.0"
 
@@ -45,13 +45,10 @@ android {
 
 dependencies {
 
-    //implementation 'androidx.core:core-ktx:1.9.0'
-    //implementation 'androidx.core:core-ktx:1.12.0-alpha01'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'com.google.android.gms:play-services-location:19.0.1'
-    //implementation 'androidx.core:core-ktx:+'
     implementation 'androidx.core:core-ktx:1.9.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

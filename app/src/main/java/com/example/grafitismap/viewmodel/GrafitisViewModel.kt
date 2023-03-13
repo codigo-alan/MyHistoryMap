@@ -6,10 +6,11 @@ import androidx.lifecycle.asLiveData
 import com.example.grafitismap.database.MarkerRepository
 import com.example.grafitismap.database.ServiceLocator
 import com.example.grafitismap.models.MarkerModel
-import com.example.grafitismap.models.modelToEntity
+
 
 class GrafitisViewModel: ViewModel() {
     var markersModelLiveData = MutableLiveData<List<MarkerModel>>().apply { value = listOf() }
+    var markersModelTemp : List<MarkerModel> = listOf()
     var selectedMarkerModel = MutableLiveData<MarkerModel>()
     var newMarkerTemp = MarkerModel("","","",-1.0,-1.0)
 
@@ -18,10 +19,12 @@ class GrafitisViewModel: ViewModel() {
     var markerRepository : MarkerRepository = ServiceLocator.markerRepository
     var markersEntityLiveData = markerRepository.markersListFlow().asLiveData()
 
-    fun entityToModel() {
+    fun entityToModel(){
         markersEntityLiveData.value?.forEach {
-            markersModelLiveData.postValue(markersModelLiveData.value?.plus(it.toModel()))
+            markersModelTemp += it.toModel()
         }
+        markersModelLiveData.postValue(markersModelTemp)
+        markersModelTemp = listOf()
     }
 
     fun addMarkerEntity(newMarkerModel: MarkerModel){
@@ -31,9 +34,6 @@ class GrafitisViewModel: ViewModel() {
     fun selectMarker(newMarkerModel: MarkerModel){
         selectedMarkerModel.postValue(newMarkerModel)
     }
-    /*fun addMarker(newMarkerModel: MarkerModel){
-        markersModelLiveData.postValue(markersModelLiveData.value?.plus(newMarkerModel))
-    }*/
 
 
 }

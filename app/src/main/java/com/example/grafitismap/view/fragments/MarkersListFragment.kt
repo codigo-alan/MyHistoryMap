@@ -42,6 +42,7 @@ class MarkersListFragment : Fragment(), OnClickListener {
 
         Log.d("list","${viewModel.markersEntityLiveData.value}")
         Log.d("list","${viewModel.markersModelLiveData.value}")
+        //viewModel.entityToModel()
         viewModel.entityToModel()
         markerAdapter = MarkerAdapter(viewModel.markersModelLiveData.value!!, this)
 
