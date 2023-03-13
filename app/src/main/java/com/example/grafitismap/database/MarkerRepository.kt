@@ -16,6 +16,8 @@ import kotlinx.coroutines.flow.map
 class MarkerRepository(val realm: Realm) {
 
     fun markersListFlow() : Flow<List<MarkerEntity>> = realm.query<MarkerEntity>().find().asFlow().map { it.list.toList() }
+
+    fun markersByUser() : Flow<List<MarkerEntity>> = realm.query<MarkerEntity>("owner_id = 'Michigan J. Frog'").find().asFlow().map { it.list.toList() }
     fun addMarkerEntity(markerEntity: MarkerEntity){
 
         realm.writeBlocking {

@@ -17,7 +17,7 @@ import com.example.grafitismap.adapters.OnClickListener
 import com.example.grafitismap.databinding.FragmentMarkersListBinding
 import com.example.grafitismap.models.MarkerModel
 import com.example.grafitismap.viewmodel.GrafitisViewModel
-
+import com.example.grafitismap.viewmodel.MarkersListViewModel
 
 
 class MarkersListFragment : Fragment(), OnClickListener {
@@ -40,13 +40,8 @@ class MarkersListFragment : Fragment(), OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.d("list","${viewModel.markersEntityLiveData.value}")
-        Log.d("list","${viewModel.markersModelLiveData.value}")
-        //viewModel.entityToModel()
         viewModel.entityToModel()
         markerAdapter = MarkerAdapter(viewModel.markersModelLiveData.value!!, this)
-
-
 
         viewModel.markersModelLiveData.observe(viewLifecycleOwner){
             markerAdapter.setMarkers(it)

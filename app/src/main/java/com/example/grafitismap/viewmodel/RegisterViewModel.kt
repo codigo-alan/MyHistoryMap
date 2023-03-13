@@ -32,6 +32,7 @@ class RegisterViewModel : ViewModel() {
                 try {
                     realmRepo.login(email, password)
                     userState.postValue(true)
+                    ServiceLocator.emailActive = email
                 } catch (e: Exception) {
                     userState.postValue(false)
                 }
