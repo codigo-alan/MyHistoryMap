@@ -9,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.grafitismap.R
 import com.example.grafitismap.databinding.FragmentProfileBinding
+import com.example.grafitismap.models.HelpDialogFragment
 import com.example.grafitismap.viewmodel.RegisterViewModel
 
 
@@ -30,6 +31,7 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.logoutBtn.setOnClickListener {
+            //HelpDialogFragment().show(childFragmentManager,"dialogFragment")
             viewModel.logout()
         }
 

@@ -9,8 +9,8 @@ import com.example.grafitismap.models.MarkerModel
 import com.example.grafitismap.models.modelToEntity
 
 class GrafitisViewModel: ViewModel() {
-    //var markersModelLiveData = MutableLiveData<List<MarkerModel>>().apply { value = listOf() }
-    //var selectedMarkerModel = MutableLiveData<MarkerModel>()
+    var markersModelLiveData = MutableLiveData<List<MarkerModel>>().apply { value = listOf() }
+    var selectedMarkerModel = MutableLiveData<MarkerModel>()
     var newMarkerTemp = MarkerModel("","","",-1.0,-1.0)
 
     //Realm
@@ -18,15 +18,20 @@ class GrafitisViewModel: ViewModel() {
     var markerRepository : MarkerRepository = ServiceLocator.markerRepository
     var markersEntityLiveData = markerRepository.markersListFlow().asLiveData()
 
+    fun entityToModel() {
+        markersEntityLiveData.value?.forEach {
+            markersModelLiveData.postValue(markersModelLiveData.value?.plus(it.toModel()))
+        }
+    }
 
     fun addMarkerEntity(newMarkerModel: MarkerModel){
         markerRepository.addMarkerEntity(newMarkerModel.toEntity(realmRepo.user!!))
     }
 
-    /*fun selectMarker(newMarkerModel: MarkerModel){
+    fun selectMarker(newMarkerModel: MarkerModel){
         selectedMarkerModel.postValue(newMarkerModel)
     }
-    fun addMarker(newMarkerModel: MarkerModel){
+    /*fun addMarker(newMarkerModel: MarkerModel){
         markersModelLiveData.postValue(markersModelLiveData.value?.plus(newMarkerModel))
     }*/
 
