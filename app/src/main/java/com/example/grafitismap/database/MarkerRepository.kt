@@ -19,7 +19,7 @@ class MarkerRepository(val realm: Realm, val user: User) {
     fun markersListFlow() : Flow<List<MarkerEntity>> = realm.query<MarkerEntity>().find().asFlow().map { it.list.toList() }
 
     //TODO not works with owner_id, but yes with name for example.
-    fun markersByUser() : Flow<List<MarkerEntity>> = realm.query<MarkerEntity>("owner_id = '${user.id}'").find().asFlow().map { it.list.toList() }
+    fun markersByUser() : Flow<List<MarkerEntity>> = realm.query<MarkerEntity>("owner_id == '${user.id}'").find().asFlow().map { it.list.toList() }
 
     fun addMarkerEntity(markerEntity: MarkerEntity){
 
@@ -33,10 +33,10 @@ class MarkerRepository(val realm: Realm, val user: User) {
 
     fun deleteMarkerEntity(id: ObjectId){
         realm.writeBlocking {
-            //find the entity by id. TODO compare id with objectId is wrong. SyntaxError in query.
+            //TODO compare id with objectId is wrong. SyntaxError in query.
             val markerEntity : MarkerEntity =
                 realm.query<MarkerEntity>("_id == $id").find().first()
-            //delete the realm object
+
             delete(markerEntity)
         }
     }
