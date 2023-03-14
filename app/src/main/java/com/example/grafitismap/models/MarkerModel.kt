@@ -1,8 +1,11 @@
 package com.example.grafitismap.models
 
 import io.realm.kotlin.mongodb.User
+import io.realm.kotlin.types.ObjectId
+
 
 class MarkerModel (
+    var id: ObjectId = ObjectId.create(),
     var name: String,
     var category: String,
     var photo: String,

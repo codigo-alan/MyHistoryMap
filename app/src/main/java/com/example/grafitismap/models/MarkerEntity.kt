@@ -10,8 +10,8 @@ open class MarkerEntity (
     var name: String = "" ,
     var category: Category? = null , //mongo relationship between Realm objects
     var photo: String = "" ,
-    var latitude: String = "0" ,//var latitude: Long = 0 , TODO not works with long in entityRepository writeBlocking
-    var longitude: String = "0" ,//var longitude: Long = 0 ,
+    var latitude: String = "0" ,
+    var longitude: String = "0" ,
     var owner_id: String = ""
     ) : RealmObject {
     constructor() : this(owner_id = "") {}
@@ -19,6 +19,7 @@ open class MarkerEntity (
 
     fun toModel(): MarkerModel {
         return MarkerModel(
+            this._id,
             this.name,
             this.category.toString(),
             this.photo,

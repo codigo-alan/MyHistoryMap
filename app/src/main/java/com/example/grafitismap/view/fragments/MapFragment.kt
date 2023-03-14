@@ -24,6 +24,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
+
 const val REQUEST_CODE_LOCATION = 100
 
 
@@ -55,12 +56,17 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         viewModel.markersEntityLiveData.observe(viewLifecycleOwner){
             it.forEach { item -> getMarker(LatLng(item.latitude.toDouble(),item.longitude.toDouble())) }
             viewModel.newMarkerTemp =
-                MarkerModel("","","", -1.0, -1.0)
+                MarkerModel(
+                    name = "",
+                    category = "",
+                    photo = "",
+                    latitude = -1.0,
+                    longitude = -1.0)
         }
 
         map.setOnMapLongClickListener {coordinates ->
             viewModel.newMarkerTemp =
-                MarkerModel("","","", coordinates.latitude, coordinates.longitude)
+                MarkerModel(name = "",category = "", photo = "", latitude = coordinates.latitude, longitude = coordinates.longitude)
             findNavController().navigate(R.id.action_mapFragment_to_addMarkerFragment)
         }
 

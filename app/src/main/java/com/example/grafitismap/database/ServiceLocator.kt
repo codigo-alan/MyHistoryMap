@@ -10,7 +10,7 @@ object ServiceLocator {
     fun configureRealm(){
         requireNotNull(realmRepo.realm)
         val realm = realmRepo.realm!!
-        markerRepository = MarkerRepository(realm)
+        markerRepository = MarkerRepository(realm, realmRepo.user!!)
     }
 
 }

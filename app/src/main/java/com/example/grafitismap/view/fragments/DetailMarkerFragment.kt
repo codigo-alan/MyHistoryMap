@@ -5,8 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.grafitismap.R
+import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.grafitismap.databinding.FragmentDetailMarkerBinding
 import com.example.grafitismap.viewmodel.GrafitisViewModel
 
@@ -34,6 +37,12 @@ class DetailMarkerFragment : Fragment() {
         binding.latitudeTv.text = marker?.latitude.toString()
         binding.longitudeTv.text = marker?.longitude.toString()
         binding.photoIv.setImageURI(marker?.photo?.toUri())
+
+        binding.deleteBtn.setOnClickListener {
+            //viewModel.deleteMarker(viewModel.selectedMarkerModel.value!!.id) //TODO
+            Toast.makeText(context,"Delete button not implemented yet",Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.action_detailMarkerFragment_to_markersListFragment)
+        }
     }
 
 }
