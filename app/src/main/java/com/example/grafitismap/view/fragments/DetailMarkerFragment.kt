@@ -39,7 +39,7 @@ class DetailMarkerFragment : Fragment() {
         binding.photoIv.setImageURI(marker?.photo?.toUri())
 
         binding.deleteBtn.setOnClickListener {
-            viewModel.deleteMarker(viewModel.selectedMarkerModel.value!!.id) //TODO
+            //viewModel.deleteMarker(viewModel.selectedMarkerModel.value!!.id) //TODO
             Toast.makeText(context,"Delete button not implemented yet",Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_detailMarkerFragment_to_markersListFragment)
         }
