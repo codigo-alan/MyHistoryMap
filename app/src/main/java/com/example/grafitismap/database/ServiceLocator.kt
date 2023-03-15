@@ -1,7 +1,7 @@
 package com.example.grafitismap.database
 
 object ServiceLocator {
-    var emailActive = "DEBUG" //TODO view with shared preferences
+    var emailActive = "DEBUG" //TODO bug with user logged in
     val realmRepo = RealmRepo()
     lateinit var markerRepository: MarkerRepository
     /**

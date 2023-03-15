@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
@@ -38,8 +39,7 @@ class SignUpFragment : Fragment() {
             findNavController().navigate(R.id.action_signUpFragment_to_loginFragment)
         }
 
-        if (binding.nameEt.text.isNotEmpty() && binding.surnameEt.text.isNotEmpty()
-            && binding.emailEt.text.isNotEmpty() && binding.passwordEt.text.isNotEmpty()
+        if (binding.emailEt.text.isNotEmpty() && binding.passwordEt.text.isNotEmpty()
             && binding.repeatPasswordEt.text.isNotEmpty()) {
             if (binding.passwordEt.text != binding.repeatPasswordEt.text){
                 binding.spanTv.visibility = View.VISIBLE
@@ -54,8 +54,6 @@ class SignUpFragment : Fragment() {
         }
 
         binding.signUpBtnId.setOnClickListener {
-            val name = binding.nameEt.text
-            val surname = binding.surnameEt.text
             val email = binding.emailEt.text.toString()
             val password = binding.passwordEt.text.toString()
 
@@ -70,5 +68,15 @@ class SignUpFragment : Fragment() {
         }
 
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as AppCompatActivity).supportActionBar?.hide() //hides action bar
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (requireActivity() as AppCompatActivity).supportActionBar?.show() //shows again action bar when this fragment finish
     }
 }

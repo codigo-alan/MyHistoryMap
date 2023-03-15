@@ -7,7 +7,6 @@ import io.realm.kotlin.ext.query
 import io.realm.kotlin.log.LogLevel
 import io.realm.kotlin.mongodb.*
 import io.realm.kotlin.mongodb.sync.SyncConfiguration
-import kotlinx.coroutines.*
 
 class RealmRepo {
 
@@ -45,12 +44,16 @@ class RealmRepo {
         ServiceLocator.configureRealm() //initialize the service locator entityRepository
     }
 
-    private fun getCredentials(email: String, password: String) =
+    private fun createCredentials(email: String, password: String) =
         Credentials.emailPassword(email, password)
+
+    fun getUserIdentities(): List<UserIdentity>? {
+        return this.user?.identities
+    }
 
     suspend fun login(email: String, password: String){
 
-        val credentials = getCredentials(email, password)
+        val credentials = createCredentials(email, password)
         realmApp.login(credentials)
         user = realmApp.currentUser!!
         remoteConfig()
@@ -65,6 +68,12 @@ class RealmRepo {
 
     fun loggedIn() = realmApp.currentUser?.loggedIn ?: false
 
+    suspend fun logout(){
+        this.user?.logOut()
+    }
 
+    suspend fun closeRealm(){
+        this.realm?.close()
+    }
 
 }

@@ -43,10 +43,15 @@ class RegisterViewModel : ViewModel() {
     fun logout(){
         viewModelScope.launch {
             withContext(Dispatchers.IO){
-                realmRepo.user?.logOut()
+                realmRepo.logout()
+                //realmRepo.closeRealm() //TODO it`s necessary close realm?
                 userState.postValue(false)
             }
         }
     }
+
+    /*fun closeRealm(){
+        realmRepo.realm?.close()
+    }*/
 
 }

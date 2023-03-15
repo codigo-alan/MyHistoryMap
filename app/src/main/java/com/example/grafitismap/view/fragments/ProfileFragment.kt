@@ -1,6 +1,7 @@
 package com.example.grafitismap.view.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -31,11 +32,10 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.emailTv.text = ServiceLocator.emailActive //TODO view with shared preferences
+        binding.emailTv.text = ServiceLocator.emailActive //TODO
 
         binding.logoutBtn.setOnClickListener {
             HelpDialogFragment().show(childFragmentManager,"dialogFragment")
-            //viewModel.logout()
         }
 
         viewModel.userState.observe(viewLifecycleOwner){

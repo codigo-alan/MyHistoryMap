@@ -2,6 +2,7 @@ package com.example.grafitismap.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -43,6 +44,15 @@ class MainActivity : AppCompatActivity() {
                 R.id.profileFragment
             ), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
+
+        //To lock the collapsed side menu
+        val currentDestinationId = navController.currentDestination?.id
+
+        if (currentDestinationId == R.id.loginFragment || currentDestinationId == R.id.signUpFragment){
+            binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        }else {
+            binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+        }
 
     }
 
