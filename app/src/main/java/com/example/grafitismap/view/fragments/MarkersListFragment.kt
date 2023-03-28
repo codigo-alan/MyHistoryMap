@@ -26,7 +26,8 @@ class MarkersListFragment : Fragment(), OnClickListener {
     private lateinit var binding: FragmentMarkersListBinding
     private lateinit var markerAdapter: MarkerAdapter
     private lateinit var myLayoutManager: RecyclerView.LayoutManager
-    private val viewModel: MarkersListViewModel by activityViewModels()
+    private val viewModel: GrafitisViewModel by activityViewModels()
+    //private val viewModel: MarkersListViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,11 +41,15 @@ class MarkersListFragment : Fragment(), OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.entityToModel()
+        //viewModel.entityToModel()
         markerAdapter = MarkerAdapter(viewModel.markersModelLiveData.value!!, this)
 
-        viewModel.markersModelLiveData.observe(viewLifecycleOwner){
-            markerAdapter.setMarkers(it)
+        viewModel.markersEntityLiveData.observe(viewLifecycleOwner){
+            viewModel.entityToModel()
+        }
+
+        viewModel.markersModelLiveData.observe(viewLifecycleOwner){ listMarker ->
+            markerAdapter.setMarkers(listMarker)
         }
 
         myLayoutManager = LinearLayoutManager(context)
