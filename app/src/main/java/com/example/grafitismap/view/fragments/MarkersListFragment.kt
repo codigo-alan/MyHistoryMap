@@ -44,7 +44,7 @@ class MarkersListFragment : Fragment(), OnClickListener {
         //viewModel.entityToModel()
         markerAdapter = MarkerAdapter(viewModel.markersModelLiveData.value!!, this)
 
-        viewModel.markersEntityLiveData.observe(viewLifecycleOwner){
+        viewModel.ownMarkersEntityLiveData.observe(viewLifecycleOwner){
             viewModel.entityToModel()
         }
 
