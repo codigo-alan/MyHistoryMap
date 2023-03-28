@@ -33,9 +33,8 @@ class MarkerRepository(val realm: Realm, val user: User) {
 
     fun deleteMarkerEntity(id: ObjectId){
         realm.writeBlocking {
-            //TODO compare id with objectId is wrong. SyntaxError in query.
             val markerEntity : MarkerEntity =
-                realm.query<MarkerEntity>("_id == $id").find().first()
+                this.query<MarkerEntity>("_id == $0", id).find().first()
 
             delete(markerEntity)
         }
