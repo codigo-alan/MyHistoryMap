@@ -19,7 +19,7 @@ class MarkerRepository(val realm: Realm, val user: User) {
     fun markersListFlow() : Flow<List<MarkerEntity>> = realm.query<MarkerEntity>().find().asFlow().map { it.list.toList() }
 
     //TODO not works with owner_id, but yes with name for example.
-    fun markersByUser() : Flow<List<MarkerEntity>> = realm.query<MarkerEntity>("owner_id == '${user.id}'").find().asFlow().map { it.list.toList() }
+    fun markersByUser() : Flow<List<MarkerEntity>> = realm.query<MarkerEntity>("owner_id == $0", user.id).find().asFlow().map { it.list.toList() }
 
     fun addMarkerEntity(markerEntity: MarkerEntity){
 
