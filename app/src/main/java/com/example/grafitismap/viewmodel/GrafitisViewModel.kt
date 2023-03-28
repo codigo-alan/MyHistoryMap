@@ -25,7 +25,7 @@ class GrafitisViewModel: ViewModel() {
     var realmRepo = ServiceLocator.realmRepo
     var markerRepository : MarkerRepository = ServiceLocator.markerRepository
     var markersEntityLiveData = markerRepository.markersListFlow().asLiveData()
-    var ownMarkersEntityLiveData = markerRepository.markersByUser().asLiveData()
+    //var ownMarkersEntityLiveData = markerRepository.markersByUser().asLiveData()
 
     fun entityToModel(){
         markersEntityLiveData.value?.forEach {

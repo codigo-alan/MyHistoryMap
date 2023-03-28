@@ -26,7 +26,7 @@ class MarkersListFragment : Fragment(), OnClickListener {
     private lateinit var binding: FragmentMarkersListBinding
     private lateinit var markerAdapter: MarkerAdapter
     private lateinit var myLayoutManager: RecyclerView.LayoutManager
-    private val viewModel: GrafitisViewModel by activityViewModels()
+    private val viewModel: MarkersListViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
