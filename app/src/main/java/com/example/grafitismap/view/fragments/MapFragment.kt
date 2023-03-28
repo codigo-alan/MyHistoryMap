@@ -1,6 +1,7 @@
 package com.example.grafitismap.view.fragments
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
@@ -17,6 +18,8 @@ import com.example.grafitismap.R
 import com.example.grafitismap.databinding.FragmentMapBinding
 import com.example.grafitismap.models.MarkerModel
 import com.example.grafitismap.viewmodel.GrafitisViewModel
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -34,13 +37,21 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var binding: FragmentMapBinding
     private val viewModel : GrafitisViewModel by activityViewModels()
 
+    //self location
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var currentCoordinates: LatLng
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentMapBinding.inflate(inflater, container, false)
-        createMap()
+        //createMap()
+
+        fusedLocationProviderClient =  LocationServices.getFusedLocationProviderClient(requireActivity())
+        getLocation()
+
         return binding.root
     }
 
@@ -52,7 +63,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
         enableLocation()
-        moveToNewMarker() //TODO move camera to newMarker or self location
+        moveToNewMarker()
         viewModel.markersEntityLiveData.observe(viewLifecycleOwner){
             it.forEach { item -> getMarker(LatLng(item.latitude.toDouble(),item.longitude.toDouble())) }
             viewModel.newMarkerTemp =
@@ -74,17 +85,36 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private fun moveToNewMarker() {
 
-        map.animateCamera(
-            CameraUpdateFactory.newLatLngZoom(LatLng(viewModel.newMarkerTemp.latitude,viewModel.newMarkerTemp.longitude), 18f),
-            5000, null)
+        //newMarker
+        if (viewModel.newMarkerTemp.name != "") {
+            map.animateCamera(
+                CameraUpdateFactory.newLatLngZoom(LatLng(viewModel.newMarkerTemp.latitude,viewModel.newMarkerTemp.longitude), 18f),
+                5000, null)
+        } else {
+            //move to self location
+            map.animateCamera(
+                CameraUpdateFactory.newLatLngZoom(currentCoordinates, 18f),
+                5000, null)
+        }
+
+
     }
 
-    //TODO view how to get self location
-    /*private fun getLocation() {
-        val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), locationPermissionCode)
-        }*/
+    @SuppressLint("MissingPermission")
+    private fun getLocation() {
+        if (isLocationPermissionGranted()) {
+            fusedLocationProviderClient.lastLocation.addOnCompleteListener {
+                val location = it.result
+                if (location != null) {
+                    currentCoordinates = LatLng(location.latitude, location.longitude)
+                    createMap()
+                }
+            }
+        } else {
+            requestLocationPermission()
+        }
+    }
+
 
     private fun createMap(){
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
@@ -156,6 +186,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     return
                 }
                 map.isMyLocationEnabled = true
+                getLocation()
             }
             else{
                 Toast.makeText(requireContext(), "Acepta los permisos de geolocalización",

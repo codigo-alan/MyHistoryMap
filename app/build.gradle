@@ -73,6 +73,8 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:2.5.3"
     //Google Maps
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
+    //Google Maps self location
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
     //CameraX
     implementation "androidx.camera:camera-core:1.2.0"
     implementation "androidx.camera:camera-camera2:1.2.0"
