@@ -19,7 +19,7 @@ class MarkersListViewModel : ViewModel() {
     //Realm
     var realmRepo = ServiceLocator.realmRepo
     var markerRepository : MarkerRepository = ServiceLocator.markerRepository
-    var markersEntityLiveData = markerRepository.markersListFlow().asLiveData()
+    var markersEntityLiveData = markerRepository.markersByUser().asLiveData()
 
     fun entityToModel(){
         markersEntityLiveData.value?.forEach {
@@ -32,5 +32,6 @@ class MarkersListViewModel : ViewModel() {
     fun selectMarker(newMarkerModel: MarkerModel){
         selectedMarkerModel.postValue(newMarkerModel)
     }
+
 
 }
