@@ -19,6 +19,6 @@ To run the application in your local machine you need to download this project a
 
 ### Technologies
 
-* Android Studio Kotlin ✔
+* Android Studio → Kotlin ✔
 * Kotlin Coroutines ✔
 * Realm, MongoDB ✔
