@@ -6,7 +6,7 @@ Each user has it`s own historical markers point.
 
 * Register and login user
 * Android navigation
-* Realm
+* Realm, MongoDB
 * MVVM, LiveData, Coroutines
 * Google Maps library
 * Glide for images
@@ -21,3 +21,4 @@ To run the application in your local machine you need to download this project a
 
 * Android Studio Kotlin ✔
 * Kotlin Coroutines ✔
+* Realm, MongoDB ✔
